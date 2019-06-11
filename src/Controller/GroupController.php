@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Group;
+use App\Entity\Category;
 use App\Form\GroupType;
 use App\Repository\GroupRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +30,7 @@ class GroupController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $group = new Group();
+        $group = new Category();
         $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
 
@@ -51,7 +51,7 @@ class GroupController extends AbstractController
     /**
      * @Route("/{id}", name="group_show", methods={"GET"})
      */
-    public function show(Group $group): Response
+    public function show(Category $group): Response
     {
         return $this->render('group/show.html.twig', [
             'group' => $group,
@@ -61,7 +61,7 @@ class GroupController extends AbstractController
     /**
      * @Route("/{id}/edit", name="group_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Group $group): Response
+    public function edit(Request $request, Category $group): Response
     {
         $form = $this->createForm(GroupType::class, $group);
         $form->handleRequest($request);
@@ -83,7 +83,7 @@ class GroupController extends AbstractController
     /**
      * @Route("/{id}", name="group_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Group $group): Response
+    public function delete(Request $request, Category $group): Response
     {
         if ($this->isCsrfTokenValid('delete'.$group->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

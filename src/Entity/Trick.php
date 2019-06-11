@@ -29,8 +29,9 @@ class Trick
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Group", inversedBy="tricks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="tricks",
+     * cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $trickGroup;
 
@@ -85,12 +86,12 @@ class Trick
         return $this;
     }
 
-    public function getTrickGroup(): ?Group
+    public function getTrickGroup(): ?Category
     {
         return $this->trickGroup;
     }
 
-    public function setTrickGroup(?Group $trickGroup): self
+    public function setTrickGroup(?Category $trickGroup): self
     {
         $this->trickGroup = $trickGroup;
 
