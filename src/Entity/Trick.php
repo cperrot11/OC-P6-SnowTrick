@@ -33,7 +33,7 @@ class Trick
      * cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
-    private $trickGroup;
+    private $category;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick")
@@ -86,14 +86,14 @@ class Trick
         return $this;
     }
 
-    public function getTrickGroup(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->trickGroup;
+        return $this->category;
     }
 
-    public function setTrickGroup(?Category $trickGroup): self
+    public function setCategory(?Category $category): self
     {
-        $this->trickGroup = $trickGroup;
+        $this->category = $category;
 
         return $this;
     }
