@@ -16,6 +16,12 @@ security:
             security: false
         main:
             anonymous: true
+            logout:
+                path:   security_logout
+                target: trick_index
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthentificatorAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
