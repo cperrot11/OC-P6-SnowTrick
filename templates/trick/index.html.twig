@@ -5,7 +5,12 @@
 {% block body %}
     {{ parent() }}
     <h1>Trick index</h1>
-
+    {% for flashMessage in app.session.flashBag.get('registration') %}
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
     <table class="table">
         <thead>
             <tr>
