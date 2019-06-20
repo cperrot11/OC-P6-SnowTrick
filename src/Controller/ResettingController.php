@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ResettingType;
+use App\Security\LoginFormAuthentificatorAuthenticator;
 use App\Services\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -92,7 +94,7 @@ class ResettingController extends AbstractController
     /**
      * @Route("/{id}/{token}", name="resetting")
      */
-    public function resetting(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function resetting(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificatorAuthenticator $authenticator)
     {
         // interdit l'accès à la page si:
         // le token associé au membre est null
@@ -119,9 +121,15 @@ class ResettingController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
+            $request->getSession()->getFlashBag()->add('registration', "Votre mot de passe a été renouvelé.");
 
-            return $this->redirectToRoute('app_login');
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
+
 
         }
 

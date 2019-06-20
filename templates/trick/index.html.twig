@@ -4,40 +4,36 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>Trick index</h1>
+    {#<h1>Bienvenue sur le bog ({{ tricks.count }})</h1>#}
     {% for flashMessage in app.session.flashBag.get('registration') %}
         <div class="alert alert-dismissible alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ flashMessage }}
         </div>
     {% endfor %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <section class="row">
         {% for trick in tricks %}
-            <tr>
-                <td>{{ trick.id }}</td>
-                <td>{{ trick.name }}</td>
-                <td>{{ trick.description }}</td>
-                <td>
-                    <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
-                    <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
-                </td>
-            </tr>
+            <article class="col-md-3">
+                <div class="card text-white bg-secondary mb-3">
+                    {#<div class="card-header"><img src={{ trick.pictures|first }} alt="" style="width:50%">#}
+                    {{ dump(trick) }}
+                    <div class="card-header">
+                        {{ trick.description(200) | raw}}
+                        {{ trick.id}} : {{ trick.name }}
+                    </div>
+                    <div class="card-body">{{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }}</div>
+                    <div class="card-footer">
+                        <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
+                        <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+                    </div>
+                </div>
+            </article>
         {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
+            <div>
+                <span colspan="4">no records found</span>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </section>
 
     <a href="{{ path('trick_new') }}">Create new</a>
 {% endblock %}

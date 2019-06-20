@@ -59,7 +59,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/{token}", name="activate")
+     * @Route("register/{id}/{token}", name="register")
      */
     public function activating(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificatorAuthenticator $authenticator)
     {

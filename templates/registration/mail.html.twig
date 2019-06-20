@@ -8,7 +8,7 @@
     Bonjour, <br>
     Cliquez sur ce lien pour activer votre compte.
     {# pour que le lien fonctionne, il est indispensable que le lien soit absolu. #}
-    <a href="{{absolute_url(path('activate', {'id': user.id, 'token': user.token}))}}">Activer mon compte</a>
+    <a href="{{absolute_url(path('register', {'id': user.id, 'token': user.token}))}}">Activer mon compte</a>
 </p>
 </body>
 </html>
