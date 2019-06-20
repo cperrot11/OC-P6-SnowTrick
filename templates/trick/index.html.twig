@@ -4,7 +4,7 @@
 
 {% block body %}
     {{ parent() }}
-    {#<h1>Bienvenue sur le bog ({{ tricks.count }})</h1>#}
+    <h1>Bienvenue sur le bog ({{ tricks|length }})</h1>
     {% for flashMessage in app.session.flashBag.get('registration') %}
         <div class="alert alert-dismissible alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -15,8 +15,10 @@
         {% for trick in tricks %}
             <article class="col-md-3">
                 <div class="card text-white bg-secondary mb-3">
-                    {#<div class="card-header"><img src={{ trick.pictures|first }} alt="" style="width:50%">#}
-                    {{ dump(trick) }}
+                    {% if trick.pictures|length>0 %}
+                        <div class="card-header"><img src={{ trick.pictures[0].file}} alt="" style="width:50%">
+                    {% endif %}
+
                     <div class="card-header">
                         {{ trick.description(200) | raw}}
                         {{ trick.id}} : {{ trick.name }}

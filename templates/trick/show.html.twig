@@ -7,9 +7,10 @@
 
         <article class="col-md-3">
             <div class="card text-white bg-secondary mb-3">
-                {{ for picture in trick.pictures }}
+                {% for picture in trick.pictures %}
+                    {{ dump(picture) }}
                     <img src={{ picture.file }} alt="" style="width:50%">
-                {{ endfor }}
+                {% endfor %}
                 <div class="card-body">{{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }}</div>
                 <div class="card-footer">
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>

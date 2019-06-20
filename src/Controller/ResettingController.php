@@ -92,7 +92,7 @@ class ResettingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/{token}", name="resetting")
+     * @Route("/reset/{id}/{token}", name="resetting")
      */
     public function resetting(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificatorAuthenticator $authenticator)
     {
