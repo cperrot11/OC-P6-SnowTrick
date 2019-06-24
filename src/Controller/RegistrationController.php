@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthentificatorAuthenticator;
 use App\Services\Mailer;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,7 @@ class RegistrationController extends AbstractController
             $user->setToken($tokenGenerator->generateToken());
             // enregistrement de la date de création du token
             $user->setPasswordRequestedAt(new \Datetime());
+            $user->setActiv(0);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -61,7 +63,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("register/{id}/{token}", name="register")
      */
-    public function activating(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificatorAuthenticator $authenticator)
+    public function activating(User $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthentificatorAuthenticator $authenticator, ObjectManager $manager)
     {
         // interdit l'accès à la page si:
         // le token associé au membre est null
@@ -76,6 +78,10 @@ class RegistrationController extends AbstractController
             'registration',
             'Votre compte est à présent activé, bienvenue sur notre blog.'
         );
+        $user->setActiv(1);
+        $manager->persist($user);
+        $manager->flush();
+
         return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,

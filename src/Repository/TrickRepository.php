@@ -20,7 +20,7 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Trick[] Returns an array of Trick objects
+    //  * @return 3-TrickFixtures[] Returns an array of 3-TrickFixtures objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class TrickRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Trick
+    public function findOneBySomeField($value): ?3-TrickFixtures
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

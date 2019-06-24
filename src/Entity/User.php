@@ -65,6 +65,11 @@ class User implements UserInterface
      */
     private $token;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activ;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -228,6 +233,18 @@ class User implements UserInterface
     public function setToken($token)
     {
         $this->token = $token;
+        return $this;
+    }
+
+    public function getActiv(): ?bool
+    {
+        return $this->activ;
+    }
+
+    public function setActiv(bool $activ): self
+    {
+        $this->activ = $activ;
+
         return $this;
     }
 }

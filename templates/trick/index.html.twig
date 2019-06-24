@@ -4,14 +4,21 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>Bienvenue sur le bog ({{ tricks|length }})</h1>
-    {% for flashMessage in app.session.flashBag.get('registration') %}
-        <div class="alert alert-dismissible alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
     <section class="row">
+        <img class="img-fluid" src="\images\mattias-olsson-160612-unsplash.jpg">
+        <h1 class="slogan"> Les figures de Snowboard dans tous les sens !</h1>
+        <a id="fleche" href="#start" data-toggle="tooltip" title="Découvrir la suite" class="fas fa-angle-double-down"></a>
+
+
+        {% for flashMessage in app.session.flashBag.get('registration') %}
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+    </section>
+    <section class="row">
+        <h3 id="start" class="text-center col-12">De nombreuse figures sont à votre disposition ({{ tricks|length }} en ce moment).</h3>
         {% for trick in tricks %}
             <article class="col-md-3">
                 <div class="card text-white bg-secondary mb-3">

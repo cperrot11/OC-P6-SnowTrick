@@ -20,7 +20,7 @@ class UserRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return User[] Returns an array of User objects
+    //  * @return 2-UserFixtures[] Returns an array of 2-UserFixtures objects
     //  */
     /*
     public function findByExampleField($value)

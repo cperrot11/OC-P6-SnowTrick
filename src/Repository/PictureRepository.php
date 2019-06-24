@@ -20,7 +20,7 @@ class PictureRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Picture[] Returns an array of Picture objects
+    //  * @return 5-PictureFixtures[] Returns an array of 5-PictureFixtures objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PictureRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Picture
+    public function findOneBySomeField($value): ?5-PictureFixtures
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

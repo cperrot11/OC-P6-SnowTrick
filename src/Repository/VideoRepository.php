@@ -20,7 +20,7 @@ class VideoRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Video[] Returns an array of Video objects
+    //  * @return 6-VideoFixtures[] Returns an array of 6-VideoFixtures objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class VideoRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Video
+    public function findOneBySomeField($value): ?6-VideoFixtures
     {
         return $this->createQueryBuilder('v')
             ->andWhere('v.exampleField = :val')
