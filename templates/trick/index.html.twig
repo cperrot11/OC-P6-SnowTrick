@@ -18,22 +18,25 @@
         {% endfor %}
     </section>
     <section class="row">
+
         <h3 id="start" class="text-center col-12">De nombreuse figures sont à votre disposition ({{ tricks|length }} en ce moment).</h3>
         {% for trick in tricks %}
-            <article class="col-md-3">
-                <div class="card text-white bg-secondary mb-3">
+            <article class="trick-display" style=display:{{ loop.index<16?:"none" }}>
+                <div class="card text-white bg-secondary m-1">
                     {% if trick.pictures|length>0 %}
-                        <div class="card-header"><img src={{ trick.pictures[0].file}} alt="" style="width:50%">
+                        <div class="card-body"><img src={{ trick.pictures[0].file}} alt="" style="width:100%">
                     {% endif %}
 
-                    <div class="card-header">
-                        {{ trick.description(200) | raw}}
-                        {{ trick.id}} : {{ trick.name }}
-                    </div>
-                    <div class="card-body">{{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }}</div>
                     <div class="card-footer">
-                        <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
-                        <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+                        <a href="{{ path('trick_show', {'id': trick.id}) }}">
+                            {{ trick.name }}({{ trick.id}})
+                        </a>
+                        {% if is_granted('ROLE_USER') %}
+                        <span>
+                            <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
+                            <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
+                        </span>
+                        {% endif %}
                     </div>
                 </div>
             </article>
@@ -42,6 +45,7 @@
                 <span colspan="4">no records found</span>
             </div>
         {% endfor %}
+        <h3 id="follow" class="text-center col-12 fas fa-book-reader"> Load more...</h3>
     </section>
 
     <a href="{{ path('trick_new') }}">Create new</a>

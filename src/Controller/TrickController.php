@@ -83,7 +83,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="trick_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="trick_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Trick $trick): Response
     {
