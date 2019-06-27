@@ -19,7 +19,7 @@
     </section>
     <section class="row">
 
-        <h3 id="start" class="text-center col-12">De nombreuse figures sont à votre disposition ({{ tricks|length }} en ce moment).</h3>
+        <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length }} en ce moment).</h3>
         {% for trick in tricks %}
             <article class="trick-display" style=display:{{ loop.index<16?:"none" }}>
                 <div class="card text-white bg-secondary m-1">
@@ -45,7 +45,11 @@
                 <span colspan="4">no records found</span>
             </div>
         {% endfor %}
-        <h3 id="follow" class="text-center col-12 fas fa-book-reader"> Load more...</h3>
+
+        <h3 id="follow" class="text-center col-12">
+            <i class="fas fa-book-reader"></i>
+            Lire plus...
+        </h3>
     </section>
 
     <a href="{{ path('trick_new') }}">Create new</a>
