@@ -37,11 +37,39 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($trick);
-            $entityManager->flush();
+            {
+                foreach ($form['pictures'] as $pict){
+                        dump($pict['picture_choice']->getdata());
+            }
+                die();
+                /** @var UploadedFile $brochureFile */
+                $brochureFile = $form['pictures']['picture_choice']->getData();
 
-            return $this->redirectToRoute('trick_index');
+//                if ($brochureFile) {
+//                    $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+//                    // this is needed to safely include the file name as part of the URL
+//                    $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+//                    $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+//
+//                    // Move the file to the directory where brochures are stored
+//                    try {
+//                        $brochureFile->move(
+//                            $this->getParameter('uploads_directory'),
+//                            $newFilename
+//                        );
+//                    } catch (FileException $e) {
+//                        // ... handle exception if something happens during file upload
+//                    }
+//
+//                    $trick->addPicture($picture->setFile($newFilename));
+//                }
+            }
+
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($trick);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('trick_index');
         }
 
         return $this->render('trick/new.html.twig', [

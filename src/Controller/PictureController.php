@@ -31,10 +31,12 @@ class PictureController extends AbstractController
     public function new(Request $request): Response
     {
         $picture = new Picture();
+
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($picture);
             $entityManager->flush();

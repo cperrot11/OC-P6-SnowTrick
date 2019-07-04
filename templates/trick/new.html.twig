@@ -9,3 +9,9 @@
 
     <a href="{{ path('trick_index') }}">back to list</a>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        console.log("salut");
+    </script>
+{% endblock %}
