@@ -38,12 +38,9 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             {
-                foreach ($form['pictures'] as $pict){
-                        dump($pict['picture_choice']->getdata());
-            }
-                die();
+
                 /** @var UploadedFile $brochureFile */
-                $brochureFile = $form['pictures']['picture_choice']->getData();
+                $brochureFile = $form['pictures']['__name__']->getData();
 
 //                if ($brochureFile) {
 //                    $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
