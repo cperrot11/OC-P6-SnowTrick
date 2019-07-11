@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use App\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,20 +17,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrickController extends AbstractController
 {
     /**
-     * @Route("/", name="trick_index", methods={"GET"})
+     * @Route("/blog", name="trick_index", methods={"GET"})
      */
     public function index(TrickRepository $trickRepository): Response
     {
+        $end = getenv('LIMIT');
+        $tricks = $trickRepository->findAllTrick(1, $end);
+        $more = $end<$tricks->count();
         return $this->render('trick/index.html.twig', [
             'title'=>'Blog snow trick',
-            'tricks' => $trickRepository->findAll(),
+            'tricks' => $tricks,
+            'more' => $more,
         ]);
     }
-
+    /**
+     * @Route("/ajax/{click}", name="loadMore", methods={"GET"})
+     */
+    public function ajax(Request $request, TrickRepository $repository, $click=1)
+    {
+        $begin = (($click-1)*getenv('LIMIT'))+1;
+        $end = getenv('LIMIT');
+        $trick = $repository->findAllTrick($begin, $end);
+        return $this->render('trick/displayMoreTrick.html.twig', [
+            'tricks' => $trick,
+        ]);
+    }
     /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $trick = new Trick();
         $trick->setCreatedAt(new \DateTime());
@@ -38,35 +54,26 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             {
+                foreach($form['pictures'] as $pict){
+                    dump($pict);
+                    die();
+                    /** @var UploadedFile $brochureFile */
+                    $brochureFile = $form['pictures']->getData();
 
-                /** @var UploadedFile $brochureFile */
-                $brochureFile = $form['pictures']['__name__']->getData();
+                    if ($brochureFile) {
+                        $brochureFileName = $fileUploader->upload($brochureFile);
 
-//                if ($brochureFile) {
-//                    $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-//                    // this is needed to safely include the file name as part of the URL
-//                    $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-//                    $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
-//
-//                    // Move the file to the directory where brochures are stored
-//                    try {
-//                        $brochureFile->move(
-//                            $this->getParameter('uploads_directory'),
-//                            $newFilename
-//                        );
-//                    } catch (FileException $e) {
-//                        // ... handle exception if something happens during file upload
-//                    }
-//
-//                    $trick->addPicture($picture->setFile($newFilename));
-//                }
+
+                        $trick->addPicture($brochureFileName);
+                    }
+                }
             }
 
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $entityManager->persist($trick);
-//            $entityManager->flush();
-//
-//            return $this->redirectToRoute('trick_index');
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($trick);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('trick_index');
         }
 
         return $this->render('trick/new.html.twig', [
@@ -120,4 +127,5 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('trick_index');
     }
+
 }

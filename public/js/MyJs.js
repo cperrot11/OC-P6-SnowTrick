@@ -5,10 +5,6 @@ var $addTagButton = $('<button type="button" class="btn btn-primary">Add a médi
 var $newLinkLi = $('<span></span>').append($addTagButton);
 
 jQuery(document).ready(function() {
-    $('#follow').on('click',function () {
-        $('.trick-display').css('display','block');
-        $('#follow').hide();
-    })
     console.log("MyJS");
     // Get the ul that holds the collection of tags
     $collectionHolder = $('ul.medias_full');
@@ -59,7 +55,7 @@ function addArticleForm($collectionHolder, $newLinkLi) {
 
     // Replace '__name__' in the prototype's HTML to
     // instead be a number based on how many items we have
-    //newForm = newForm.replace(/__name__/g, index);
+    newForm = newForm.replace(/__name__/g, index);
 
     // increase the index with one for the next item
     $collectionHolder.data('index', index + 1);

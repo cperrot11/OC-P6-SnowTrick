@@ -3,17 +3,25 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-    <h1>Trick</h1>
-
-        <article class="col-md-3">
-            <div class="card text-white bg-secondary mb-3">
+{# Titre #}
+    <article >
+            <div class="row">
+                {% if trick.pictures|length > 0 %}
+                    <img src={{ trick.pictures[0].file }}>
+                {% else %}
+                    <img src="..\public\images\vide.jpg" >
+                {% endif %}
+                <h1 class="trick-title">{{ trick.name }}</h1>
+            </div>
+            <div class="row trick-display2">
                 {% for picture in trick.pictures %}
-                    <img src={{ picture.file }} alt="" style="width:50%">
+                    <img class="img-thumbnail" src={{ picture.file }}>
                 {% endfor %}
                 {% for video in trick.videos %}
-                    {{ video.link|raw }}
+                    <span class="video-thumbnail"> {{ video.link|raw }}</span>
                 {% endfor %}
-                <div class="card-body">{{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }}</div>
+            </div>
+                <div>{{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }}</div>
                 <div class="card-footer">
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>

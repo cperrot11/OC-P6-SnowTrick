@@ -18,39 +18,63 @@
         {% endfor %}
     </section>
     <section class="row">
-
         <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length }} en ce moment).</h3>
-        {% for trick in tricks %}
-            <article class="trick-display" style=display:{{ loop.index<16?:"none" }}>
-                <div class="card text-white bg-secondary m-1">
-                    {% if trick.pictures|length>0 %}
-                        <div class="card-body"><img src={{ trick.pictures[0].file}} alt="" style="width:100%">
-                    {% endif %}
-
-                    <div class="card-footer">
-                        <a href="{{ path('trick_show', {'id': trick.id}) }}">
-                            {{ trick.name }}({{ trick.id}})
-                        </a>
-                        {% if is_granted('ROLE_USER') %}
-                        <span>
-                            <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
-                            <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
-                        </span>
+            {% for trick in tricks %}
+                <article class="trick-display">
+                    <div class="card text-white bg-secondary m-1">
+                        {% if trick.pictures|length>0 %}
+                            <a href="{{ path('trick_show', {'id': trick.id}) }}">
+                                <div class="card-body"><img src={{ trick.pictures[0].file}} alt="" style="width:100%"></div>
+                            </a>
                         {% endif %}
-                    </div>
-                </div>
-            </article>
-        {% else %}
-            <div>
-                <span colspan="4">no records found</span>
-            </div>
-        {% endfor %}
 
-        <h3 id="follow" class="text-center col-12">
-            <i class="fas fa-book-reader"></i>
-            Lire plus...
-        </h3>
+                        <div class="card-footer">
+                            <a href="{{ path('trick_show', {'id': trick.id}) }}">
+                                {{ trick.name }}({{ trick.id}})
+                            </a>
+                            {% if is_granted('ROLE_USER') %}
+                            <span>
+                                <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
+                                <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </article>
+                <span id="trickList"></span>
+            {% else %}
+                <div>
+                    <span colspan="4">no records found</span>
+                </div>
+            {% endfor %}
+            {% if more %}
+                <a id="readMore">
+                    <h3 id="follow" class="text-center col-12">
+                        <i class="fas fa-book-reader"></i>
+                        Lire plus...
+                    </h3>
+                </a>
+            {% endif %}
     </section>
 
     <a href="{{ path('trick_new') }}">Create new</a>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        click = 1;
+        jQuery(document).ready(function() {
+            $('#follow').on('click', function () {
+                click++;
+                $('readMore').display=false;
+                return $.ajax({
+                    url: "{{ path('loadMore') }}"+'/'+click,
+                    method: "GET",
+                    success: function (response) {
+                        $('#readMore').before(response);
+                    }}
+                );
+            })
+        })
+    </script>
+{% endblock  %}

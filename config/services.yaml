@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     uploads_directory: '%kernel.project_dir%/public/uploads/'
+    picture_list:  ['180', '360', 'backflip', 'frontflip', 'japanair']
 
 services:
     # default configuration for services in *this* file

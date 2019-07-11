@@ -18,15 +18,15 @@ class PictureType extends AbstractType
                 'label' => 'Images (jpg, bmp, png)',
                 'mapped'=> false,
                 'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/*',
-                        ],
-                        'mimeTypesMessage' => 'Choisir un fichier de type image uniquement',
-                    ])
-                ],
+//                'constraints' => [
+//                    new File([
+//                        'maxSize' => '1024k',
+//                        'mimeTypes' => [
+//                            'image/*',
+//                        ],
+//                        'mimeTypesMessage' => 'Choisir un fichier de type image uniquement',
+//                    ])
+//                ],
             ])
 
         ;
@@ -35,7 +35,7 @@ class PictureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Picture::class,
+            'data_class' => null,
         ]);
     }
 }
