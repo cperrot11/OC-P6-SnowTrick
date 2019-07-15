@@ -14,19 +14,19 @@ class PictureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(('picture_choice'), FileType::class, [
+            ->add(('file'), FileType::class, [
                 'label' => 'Images (jpg, bmp, png)',
-                'mapped'=> false,
+//                'mapped'=> false,
                 'required' => false,
-//                'constraints' => [
-//                    new File([
-//                        'maxSize' => '1024k',
-//                        'mimeTypes' => [
-//                            'image/*',
-//                        ],
-//                        'mimeTypesMessage' => 'Choisir un fichier de type image uniquement',
-//                    ])
-//                ],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/*',
+                        ],
+                        'mimeTypesMessage' => 'Choisir un fichier de type image uniquement',
+                    ])
+                ],
             ])
 
         ;
@@ -35,7 +35,7 @@ class PictureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => null,
+            'data_class' => Picture::class,
         ]);
     }
 }

@@ -6,7 +6,7 @@
         <ul class="medias_full" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}">
             <ul>
                 {% for pict in form.pictures %}
-                    <li>{{ form_widget(pict.picture_choice) }}</li>
+                    <li>{{ form_widget(pict.file) }}</li>
                 {% endfor %}
             </ul>
         </ul>

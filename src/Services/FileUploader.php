@@ -15,6 +15,7 @@
 // src/Service/FileUploader.php
 namespace App\Services;
 
+use App\Entity\Picture;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -40,6 +41,26 @@ class FileUploader
         }
 
         return $fileName;
+    }
+
+    /**
+     * Créer un nom et un path pour l'image et l'enregistre sur le disque
+     *
+     * @param Image $image
+     * @return Image $image
+     */
+    public function saveImage(Picture $image): Picture
+    {
+        // Récupère le fichier de l'image uploadée
+        $file = $image->getFile();
+        // Créer un nom unique pour le fichier
+        $name = md5(uniqid()) . '.' . $file->getClientOriginalExtension();
+        $image->setName($name);
+        // Déplace le fichier
+        $path = 'uploads';
+        $file->move($path, $name);
+
+        return $image;
     }
 
     public function getTargetDirectory()

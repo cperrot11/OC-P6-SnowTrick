@@ -18,13 +18,13 @@
         {% endfor %}
     </section>
     <section class="row">
-        <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length }} en ce moment).</h3>
+        <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length -1}} en ce moment).</h3>
             {% for trick in tricks %}
                 <article class="trick-display">
                     <div class="card text-white bg-secondary m-1">
                         {% if trick.pictures|length>0 %}
                             <a href="{{ path('trick_show', {'id': trick.id}) }}">
-                                <div class="card-body"><img src={{ trick.pictures[0].file}} alt="" style="width:100%"></div>
+                                <div class="card-body"><img src={{ trick.pictures[0].path}} alt="" style="width:100%"></div>
                             </a>
                         {% endif %}
 

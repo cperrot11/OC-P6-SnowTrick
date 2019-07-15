@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Picture;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use App\Services\FileUploader;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +19,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrickController extends AbstractController
 {
     /**
+     * @Route("/test", name="test")
+     */
+    public function test(ObjectManager $manager) : Response
+    {
+        $trick1 = new Trick();
+        $trick1->setCreatedAt(new \DateTime());
+        $trick1->setDescription('test');
+        $trick1->setName('test');
+        $img1 =new Picture();
+        $img1->setFile('test.jpg');
+        $img1->setTrick($trick1);
+        $img2 =new Picture();
+        $img2->setFile('test2.jpg');
+        $img2->setTrick($trick1);
+
+        $manager->persist($img1);
+        $manager->persist($img2);
+        $manager->persist($trick1);
+        $manager->flush();
+
+        return $this->redirectToRoute('trick_index');
+    }
+    /**
      * @Route("/blog", name="trick_index", methods={"GET"})
      */
     public function index(TrickRepository $trickRepository): Response
     {
         $end = getenv('LIMIT');
-        $tricks = $trickRepository->findAllTrick(1, $end);
+        $tricks = $trickRepository->findAllTrick(0, $end);
         $more = $end<$tricks->count();
         return $this->render('trick/index.html.twig', [
             'title'=>'Blog snow trick',
@@ -45,33 +70,24 @@ class TrickController extends AbstractController
     /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      */
-    public function new(Request $request, FileUploader $fileUploader): Response
+    public function new(Request $request, FileUploader $fileUploader, ObjectManager $manager): Response
     {
         $trick = new Trick();
         $trick->setCreatedAt(new \DateTime());
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
+        $manager->persist($trick);
 
         if ($form->isSubmitted() && $form->isValid()) {
             {
-                foreach($form['pictures'] as $pict){
-                    dump($pict);
-                    die();
+                foreach($trick->getPictures() as $pict){
                     /** @var UploadedFile $brochureFile */
-                    $brochureFile = $form['pictures']->getData();
-
-                    if ($brochureFile) {
-                        $brochureFileName = $fileUploader->upload($brochureFile);
-
-
-                        $trick->addPicture($brochureFileName);
-                    }
+                    $pict = $fileUploader->saveImage($pict);
+                    $manager->persist($pict);
                 }
             }
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($trick);
-            $entityManager->flush();
+            dump($trick);
+            $manager->flush();
 
             return $this->redirectToRoute('trick_index');
         }
@@ -127,5 +143,7 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('trick_index');
     }
+
+
 
 }

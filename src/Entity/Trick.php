@@ -36,7 +36,7 @@ class Trick
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick")
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $pictures;
 
@@ -117,7 +117,6 @@ class Trick
             $this->pictures[] = $picture;
             $picture->setTrick($this);
         }
-
         return $this;
     }
 
@@ -130,7 +129,6 @@ class Trick
                 $picture->setTrick(null);
             }
         }
-
         return $this;
     }
 
@@ -148,7 +146,6 @@ class Trick
             $this->video[] = $video;
             $video->setTrick($this);
         }
-
         return $this;
     }
 
@@ -161,7 +158,6 @@ class Trick
                 $video->setTrick(null);
             }
         }
-
         return $this;
     }
 
@@ -179,7 +175,6 @@ class Trick
             $this->comments[] = $comment;
             $comment->setTrick($this);
         }
-
         return $this;
     }
 
@@ -192,7 +187,6 @@ class Trick
                 $comment->setTrick(null);
             }
         }
-
         return $this;
     }
 
@@ -204,7 +198,6 @@ class Trick
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 

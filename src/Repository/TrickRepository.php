@@ -50,7 +50,7 @@ class TrickRepository extends ServiceEntityRepository
     */
     public function findAllTrick($begin, $limit){
         $query = $this->createQueryBuilder('o')
-            ->orderBy('o.createdAt','DESC')
+            ->orderBy('o.createdAt','desc')
             ->getQuery()
             ->setFirstResult($begin)
             ->setMaxResults($limit);
