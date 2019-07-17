@@ -86,7 +86,6 @@ class TrickController extends AbstractController
                     $manager->persist($pict);
                 }
             }
-            dump($trick);
             $manager->flush();
 
             return $this->redirectToRoute('trick_index');
