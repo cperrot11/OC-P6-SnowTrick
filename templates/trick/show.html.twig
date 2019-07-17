@@ -3,11 +3,11 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-{# Titre #}
+    {{ parent() }}
     <article >
             <div class="row">
                 {% if trick.pictures|length > 0 %}
-                    <img src={{ trick.pictures[0].file }}>
+                    <img class="contenu" src={{ trick.pictures[0].path }}>
                 {% else %}
                     <img src="..\public\images\vide.jpg" >
                 {% endif %}
@@ -15,7 +15,7 @@
             </div>
             <div class="row trick-display2">
                 {% for picture in trick.pictures %}
-                    <img class="img-thumbnail" src={{ picture.file }}>
+                    <img class="img-thumbnail" src={{ picture.path }}>
                 {% endfor %}
                 {% for video in trick.videos %}
                     <span class="video-thumbnail"> {{ video.link|raw }}</span>
@@ -27,7 +27,7 @@
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
                 </div>
             </div>
-        </article>
+    </article>
 
     <a href="{{ path('trick_index') }}">back to list</a>
     {{ include('trick/_delete_form.html.twig') }}
