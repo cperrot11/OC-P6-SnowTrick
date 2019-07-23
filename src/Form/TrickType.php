@@ -26,7 +26,13 @@ class TrickType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-            ]);
+            ])
+            ->add('videos', CollectionType::class, [
+            'entry_type' => VideoType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+    ]);
         ;
     }
 

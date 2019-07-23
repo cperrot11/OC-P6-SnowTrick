@@ -5,7 +5,7 @@
 {% block body %}
     {{ parent() }}
     <article >
-            <div class="row">
+            <div class="row aLaUne">
                 {% if trick.pictures|length > 0 %}
                     <img class="contenu" src={{ trick.pictures[0].path }}>
                 {% else %}
@@ -13,22 +13,90 @@
                 {% endif %}
                 <h1 class="trick-title">{{ trick.name }}</h1>
             </div>
-            <div class="row trick-display2">
+            <div class="row vignette">
                 {% for picture in trick.pictures %}
-                    <img class="img-thumbnail" src={{ picture.path }}>
+                    <img class="img-thumbnail" src={{ picture.path }} alt={{ picture.name }}>
                 {% endfor %}
                 {% for video in trick.videos %}
-                    <span class="video-thumbnail"> {{ video.link|raw }}</span>
+                    <iframe class="video-thumbnail" src="{{ video.link }}" ></iframe>
                 {% endfor %}
             </div>
-                <div>{{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }}</div>
-                <div class="card-footer">
-                    <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
-                    <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
-                </div>
+            <!-- (1) video wrapper -->
+            <div class="youtube" data-embed="AqcjdkPMPJA">
+                <!-- (2) the "play" button -->
+                <div class="play-button"></div>
+
+            </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="img01">
+                <div id="caption"></div>
+            </div>
+            <div class="row trick-info">
+                <span class="badge-pill badge-primary"> Créé le : {{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }} </span>
+                <span class="badge badge-pill badge-primary"> Groupe : {{ trick.category.name }}</span>
+                <span class="badge badge-pill badge-primary"> Modifié le : {{ trick.lastUpdate | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }} </span>
+            </div>
+            <div class="row trick-content">
+                <p> {{ trick.description | raw}} </p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
             </div>
     </article>
 
     <a href="{{ path('trick_index') }}">back to list</a>
     {{ include('trick/_delete_form.html.twig') }}
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        var modalImg = document.getElementById("img01");
+        jQuery(document).ready(function() {
+            //1-Picture
+            $('.img-thumbnail').click(function () {
+                modalImg.src = this.src;
+                $("#myModal").css('display','block').show();
+            })
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+            //2-Video
+            var youtube = document.querySelectorAll( ".youtube" );
+
+            for (var i = 0; i < youtube.length; i++) {
+
+                var source = "https://img.youtube.com/vi/"+ youtube[i].dataset.embed +"/sddefault.jpg";
+
+                var image = new Image();
+                image.src = source;
+                image.addEventListener( "load", function() {
+                    youtube[ i ].appendChild( image );
+                }( i ) );
+
+                youtube[i].addEventListener( "click", function() {
+
+                    var iframe = document.createElement( "iframe" );
+
+                    iframe.setAttribute( "frameborder", "0" );
+                    iframe.setAttribute( "allowfullscreen", "" );
+                    iframe.setAttribute( "src", "https://www.youtube.com/embed/"+ this.dataset.embed +"?rel=0&showinfo=0&autoplay=1" );
+
+                    this.innerHTML = "";
+                    this.appendChild( iframe );
+                } );
+            };
+
+        })
+    </script>
+
+{% endblock %}
+
