@@ -5,7 +5,7 @@
 {% block body %}
     {{ parent() }}
     <article >
-            <div class="row">
+            <div class="row aLaUne">
                 {% if trick.pictures|length > 0 %}
                     <img class="contenu" src={{ trick.pictures[0].path }}>
                 {% else %}
@@ -13,21 +13,70 @@
                 {% endif %}
                 <h1 class="trick-title">{{ trick.name }}</h1>
             </div>
-            <div class="row trick-display2">
+            <div class="row vignette">
                 {% for picture in trick.pictures %}
-                    <img class="img-thumbnail" src={{ picture.path }}>
+                    <img class="img-thumbnail" src={{ picture.path }} alt={{ picture.name }}>
                 {% endfor %}
                 {% for video in trick.videos %}
-                    <span class="video-thumbnail"> {{ video.link|raw }}</span>
+                    <span class="video-src">{{ video.link }}</span>
+                    <img class="video-thumbnail" src={{ video.thumbnail }} >
                 {% endfor %}
             </div>
-                <div>{{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }}</div>
-                <div class="card-footer">
-                    <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
-                </div>
+
+            <div id="Modal_img" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="img01">
+                <div id="caption"></div>
             </div>
+            <!-- The video Modal -->
+            <div id="Modal_video" class="modal">
+                <span class="close">&times;</span>
+                <iframe class="modal-content" id="video01" src="" ></iframe>
+            </div>
+
+            <div class="row trick-info">
+                <span class="badge-pill badge-primary"> Créé le : {{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }} </span>
+                <span class="badge-pill badge-primary"> Groupe : {{ trick.category.name }}</span>
+                <span class="badge-pill badge-primary"> Modifié le : {{ trick.lastUpdate | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }} </span>
+            </div>
+            <div class="row trick-content">
+                <p> {{ trick.description | raw}} </p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+            </div>
+
     </article>
 
     <a href="{{ path('trick_index') }}">back to list</a>
     {{ include('trick/_delete_form.html.twig') }}
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Get the modal
+        var modalImg = document.getElementById("img01");
+        var modalVideo = document.getElementById("video01");
+        jQuery(document).ready(function() {
+            //1-Picture
+            $('.img-thumbnail').click(function () {
+                    modalImg.src = this.src;
+                    $("#Modal_img").css('display','block').show();
+            })
+            //2-vidéo
+            $('.video-thumbnail').click(function () {
+                var video_src = this.previousElementSibling;
+                modalVideo.src = "https://www.youtube.com/embed/"+ video_src.innerText +"?rel=0&showinfo=0&autoplay=1";
+                $("#Modal_video").css('display','block').show();
+            })
+
+            //3-bouton close
+            $('.close').click(function () {
+                console.log("close_123");
+                $(".modal").css('display','none')
+            })
+        })
+    </script>
+
+{% endblock %}
+

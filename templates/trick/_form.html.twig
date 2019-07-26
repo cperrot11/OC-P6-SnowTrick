@@ -2,11 +2,19 @@
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}
     <section>
-        <h3>Liste média</h3>
+        <h3>Liste des images</h3>
         <ul class="medias_full" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}">
             <ul>
                 {% for pict in form.pictures %}
                     <li>{{ form_row(pict.file) }}</li>
+                {% endfor %}
+            </ul>
+        </ul>
+        <h3>Liste des vidéos</h3>
+        <ul class="medias_full" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
+            <ul>
+                {% for video in form.videos %}
+                    <li>{{ form_row(video.link) }}</li>
                 {% endfor %}
             </ul>
         </ul>
