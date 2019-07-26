@@ -18,21 +18,23 @@
                     <img class="img-thumbnail" src={{ picture.path }} alt={{ picture.name }}>
                 {% endfor %}
                 {% for video in trick.videos %}
-                    <iframe class="video-thumbnail" src="{{ video.link }}" ></iframe>
+                    <span class="video-src">{{ video.link }}</span>
+                    <img class="video-thumbnail" src={{ video.thumbnail }} >
+
                 {% endfor %}
             </div>
-            <!-- (1) video wrapper -->
-            <div class="youtube" data-embed="AqcjdkPMPJA">
-                <!-- (2) the "play" button -->
-                <div class="play-button"></div>
 
-            </div>
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
+            <div id="Modal_img" class="modal">
                 <span class="close">&times;</span>
                 <img class="modal-content" id="img01">
                 <div id="caption"></div>
             </div>
+            <!-- The video Modal -->
+            <div id="Modal_video" class="modal">
+                <span class="close">&times;</span>
+                <iframe class="modal-content" id="video01" src="" ></iframe>
+            </div>
+
             <div class="row trick-info">
                 <span class="badge-pill badge-primary"> Créé le : {{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }} </span>
                 <span class="badge badge-pill badge-primary"> Groupe : {{ trick.category.name }}</span>
@@ -44,6 +46,7 @@
             <div class="card-footer">
                 <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
             </div>
+
     </article>
 
     <a href="{{ path('trick_index') }}">back to list</a>
@@ -53,48 +56,26 @@
     {{ parent() }}
     <script>
         // Get the modal
-        var modal = document.getElementById("myModal");
         var modalImg = document.getElementById("img01");
+        var modalVideo = document.getElementById("video01");
         jQuery(document).ready(function() {
             //1-Picture
             $('.img-thumbnail').click(function () {
-                modalImg.src = this.src;
-                $("#myModal").css('display','block').show();
+                    modalImg.src = this.src;
+                    $("#Modal_img").css('display','block').show();
+            })
+            //2-vidéo
+            $('.video-thumbnail').click(function () {
+                var video_src = this.previousElementSibling;
+                modalVideo.src = "https://www.youtube.com/embed/"+ video_src.innerText +"?rel=0&showinfo=0&autoplay=1";
+                $("#Modal_video").css('display','block').show();
             })
 
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function () {
-                modal.style.display = "none";
-            }
-            //2-Video
-            var youtube = document.querySelectorAll( ".youtube" );
-
-            for (var i = 0; i < youtube.length; i++) {
-
-                var source = "https://img.youtube.com/vi/"+ youtube[i].dataset.embed +"/sddefault.jpg";
-
-                var image = new Image();
-                image.src = source;
-                image.addEventListener( "load", function() {
-                    youtube[ i ].appendChild( image );
-                }( i ) );
-
-                youtube[i].addEventListener( "click", function() {
-
-                    var iframe = document.createElement( "iframe" );
-
-                    iframe.setAttribute( "frameborder", "0" );
-                    iframe.setAttribute( "allowfullscreen", "" );
-                    iframe.setAttribute( "src", "https://www.youtube.com/embed/"+ this.dataset.embed +"?rel=0&showinfo=0&autoplay=1" );
-
-                    this.innerHTML = "";
-                    this.appendChild( iframe );
-                } );
-            };
-
+            //3-bouton close
+            $('.close').click(function () {
+                console.log("close_123");
+                $(".modal").css('display','none')
+            })
         })
     </script>
 

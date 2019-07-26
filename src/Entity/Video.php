@@ -26,6 +26,17 @@ class Video
      * @ORM\JoinColumn(nullable=false)
      */
     private $trick;
+    private $thumbnail;
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnail()
+    {
+        $source = "http://img.youtube.com/vi/".$this->getLink()."/sddefault.jpg";
+        return $source;
+    }
+
 
     public function getId(): ?int
     {
