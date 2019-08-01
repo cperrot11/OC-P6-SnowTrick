@@ -1,6 +1,7 @@
 {{ form_start(form) }}
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}
+    {{ form_row(form.category) }}
     <section>
         <h3>Liste des images</h3>
         <ul class="medias_full" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}">
@@ -27,4 +28,5 @@
 
     <button class="btn">{{ button_label|default('Save') }}</button>
     {#{% do form.pictures.setRendered() %}#}
+    {{ form_row(form._token) }}
 {{ form_end(form, {'render_rest':false}) }}
