@@ -37,7 +37,7 @@ class Picture
      */
     public function getPath()
     {
-        return '../uploads/'.$this->name;
+        return '/uploads/'.$this->name;
     }
 
     /**

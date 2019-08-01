@@ -3,6 +3,7 @@
 {% block title %}Edit Trick{% endblock %}
 
 {% block body %}
+    {{ parent() }}
     <h1>Edit Trick</h1>
 
     {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}

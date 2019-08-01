@@ -1,7 +1,7 @@
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addTagButton = $('<button type="button" class="btn btn-primary">Add a média</button>');
+var $addTagButton = $('<button type="button" class="btn btn-primary">Nouvelle image</button>');
 var $newLinkLi = $('<span></span>').append($addTagButton);
 
 jQuery(document).ready(function() {
@@ -65,7 +65,7 @@ function addArticleForm($collectionHolder, $newLinkLi) {
     $newLinkLi.before($newFormLi);
 }
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormButton = $('<button type="button" class="btn btn-danger">Delete this média</button>');
+    var $removeFormButton = $('<button type="button" class="btn btn-danger">Supprimer</button>');
     $tagFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function (e) {

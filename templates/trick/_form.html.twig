@@ -6,19 +6,25 @@
         <ul class="medias_full" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}">
             <ul>
                 {% for pict in form.pictures %}
-                    <li>{{ form_row(pict.file) }}</li>
+                    {#<li>{{ form_row(pict.file) }}</li>#}
+                    {#vérifie si l'image existe ?#}
+                    {% if pict.vars.data.name %}
+                        <li>
+                            <img class="col-2" src="{{ pict.vars.data.path }}" >
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </ul>
         <h3>Liste des vidéos</h3>
-        <ul class="medias_full" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
-            <ul>
+        <ul class="">
                 {% for video in form.videos %}
                     <li>{{ form_row(video.link) }}</li>
                 {% endfor %}
-            </ul>
         </ul>
+
     </section>
 
     <button class="btn">{{ button_label|default('Save') }}</button>
+    {#{% do form.pictures.setRendered() %}#}
 {{ form_end(form) }}

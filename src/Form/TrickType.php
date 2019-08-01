@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use App\Entity\Picture;
 use App\Entity\Trick;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

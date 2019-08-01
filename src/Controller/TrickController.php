@@ -102,6 +102,7 @@ class TrickController extends AbstractController
      */
     public function show(Trick $trick): Response
     {
+        dump($trick);
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
         ]);
@@ -110,12 +111,22 @@ class TrickController extends AbstractController
     /**
      * @Route("/{id}/edit", name="trick_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Trick $trick): Response
+    public function edit(Request $request, Trick $trick, FileUploader $fileUploader, ObjectManager $manager): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $cpt = $trick->getPictures()->count();
+            foreach($trick->getPictures() as $pict){
+                /** @var UploadedFile $brochureFile */
+//                Nouvelle image
+                if (!$pict->getId()){
+                    $pict = $fileUploader->saveImage($pict);
+                    $manager->persist($pict);
+                }
+
+            }
+            $manager->persist($trick);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('trick_index', [
