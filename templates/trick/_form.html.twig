@@ -6,11 +6,11 @@
         <ul class="medias_full" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}">
             {#<ul>#}
                 {% for pict in form.pictures %}
-                    <li>{{ form_row(pict.file) }}</li>
                     {#vérifie si l'image existe ?#}
                     {% if pict.vars.data.name %}
                         <li>
                             <img class="col-2" src="{{ pict.vars.data.path }}" >
+                            <span class="d-none">{{ form_row(pict.file) }}</span>
                         </li>
                     {% endif %}
                 {% endfor %}
