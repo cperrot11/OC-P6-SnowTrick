@@ -7,6 +7,7 @@ use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use App\Services\FileUploader;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,27 +110,37 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="trick_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="trick_edit")
      */
-    public function edit(Request $request, Trick $trick, FileUploader $fileUploader, ObjectManager $manager): Response
+    public function edit($id, Request $request, FileUploader $fileUploader, ObjectManager $manager): Response
     {
+        //stock les images initiales
+        $originalPicts = new ArrayCollection();
+        $trick = $manager->getRepository(Trick::class)->find($id);
+        foreach ($trick->getPictures() as $picture){
+            $originalPicts->add($picture);
+        }
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $cpt = $trick->getPictures()->count();
+            // Ajout image
             foreach($trick->getPictures() as $pict){
                 /** @var UploadedFile $brochureFile */
-//                Nouvelle image
                 if (!$pict->getId()){
                     $pict = $fileUploader->saveImage($pict);
-                    $manager->persist($pict);
                 }
-
+            }
+            // suppression image
+            foreach ($originalPicts as $pict){
+                if (false === $trick->getPictures()->contains($pict)) {
+                    $trick->removePicture($pict);
+                }
             }
             $manager->persist($trick);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('trick_index', [
+            return $this->redirectToRoute('trick_edit', [
                 'id' => $trick->getId(),
             ]);
         }
