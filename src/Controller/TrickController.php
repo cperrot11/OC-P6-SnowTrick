@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Picture;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use App\Services\FileUploader;
@@ -100,13 +102,26 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="trick_show", methods={"GET"})
+     * @Route("/{id}", name="trick_show", methods={"GET","POST"})
      */
-    public function show(Trick $trick): Response
+    public function show(Trick $trick, Request $request, ObjectManager $manager): Response
     {
-        dump($trick);
+        $comment = new Comment();
+        $comment->setCreationDate(new \DateTime());
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $comment->setTrick($trick);
+            $comment->setUser($this->getUser());
+
+            $manager->persist($comment);
+            $manager->flush();
+        }
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'commentForm'=>$form->createView()
         ]);
     }
 
@@ -154,7 +169,4 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('trick_index');
     }
-
-
-
 }

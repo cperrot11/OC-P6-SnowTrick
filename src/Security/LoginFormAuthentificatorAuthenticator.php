@@ -65,13 +65,15 @@ class LoginFormAuthentificatorAuthenticator extends AbstractFormLoginAuthenticat
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
+
+        if (!$user) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException('Identifiant ou mot de passe invalide.');
+        }
         if (!$user->getActiv()){
             throw new CustomUserMessageAuthenticationException('Utilisateur non encore validé.');
         }
-        if (!$user) {
-            // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Nom d\'utilisateur non trouvé.');
-        }
+
 
         return $user;
     }

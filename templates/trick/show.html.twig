@@ -24,17 +24,16 @@
             </div>
 
             <div id="Modal_img" class="modal">
-                <div id="stop-modal">
-                    <span class="close">&times;</span>
+                <div class="stop-modal">
                     <img class="modal-content" id="img01">
-                    <div id="caption"></div>
+                    <span class="close">&times;</span>
                 </div>
             </div>
             <!-- The video Modal -->
             <div id="Modal_video" class="modal">
-                <div id="test">
-                    <span class="close">&times;</span>
+                <div class="stop-modal" id="test">
                     <iframe class="modal-content" id="video01" src="" ></iframe>
+                    <span class="close">&times;</span>
                 </div>
             </div>
 
@@ -49,8 +48,33 @@
             <div class="card-footer">
                 <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
             </div>
-
     </article>
+    <section>
+        {% for comment in trick.comments %}
+            <div class="comment">
+                <div class="row">
+                    <div class="col-3">
+                        {{ comment.user.username }} <small>({{ comment.creationDate | date('d/m/Y à H:i') }})</small>
+                    </div>
+                    <div class="col">
+                        {{ comment.description }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% if app.user %}
+            {{ form_start(commentForm) }}
+            {{ form_row(commentForm.description, {'attr' : {'placeholder': "Votre commentaire"}}) }}
+            <button type="submit" class="btn btn-success">Commenter</button>
+
+            {{ form_row(commentForm._token) }}
+            {{ form_end(commentForm, {'render_rest': false}) }}
+        {% else %}
+            <h2>Vous ne pouvez pas commenter, sans être logué.</h2>
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Connexion</a>
+        {% endif %}
+
+    </section>
 
     <a href="{{ path('trick_index') }}">back to list</a>
     {{ include('trick/_delete_form.html.twig') }}
