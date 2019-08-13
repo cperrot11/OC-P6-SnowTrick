@@ -45,9 +45,11 @@
             <div class="row trick-content">
                 <p> {{ trick.description | raw}} </p>
             </div>
-            <div class="card-footer">
-                <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
-            </div>
+            {% if is_granted('ROLE_USER') %}
+                <div class="card-footer">
+                    <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+                </div>
+            {% endif %}
     </article>
     <section>
         {% for comment in trick.comments %}
@@ -77,7 +79,9 @@
     </section>
 
     <a href="{{ path('trick_index') }}">back to list</a>
-    {{ include('trick/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_USER') %}
+        {{ include('trick/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

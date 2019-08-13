@@ -47,17 +47,16 @@
                     <span colspan="4">no records found</span>
                 </div>
             {% endfor %}
-            {% if more %}
-                <a id="readMore">
-                    <h3 id="follow" class="text-center col-12">
-                        <i class="fas fa-book-reader"></i>
+            <a id="readMore">
+                <h3 id="follow" class="text-center col-12">
+                    <i class="fas fa-book-reader"></i>
                         Voir plus...
-                    </h3>
-                </a>
-            {% endif %}
+                </h3>
+            </a>
     </section>
-
-    <a href="{{ path('trick_new') }}">Create new</a>
+    {% if is_granted('ROLE_USER') %}
+        <a href="{{ path('trick_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

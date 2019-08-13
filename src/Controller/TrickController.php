@@ -12,6 +12,7 @@ use App\Repository\TrickRepository;
 use App\Services\FileUploader;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,30 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TrickController extends AbstractController
 {
-    /**
-     * @Route("/test", name="test")
-     */
-    public function test(ObjectManager $manager) : Response
-    {
-        $trick1 = new Trick();
-        $trick1->setCreatedAt(new \DateTime());
-        $trick1->setDescription('test');
-        $trick1->setName('test');
-        $img1 =new Picture();
-        $img1->setFile('test.jpg');
-        $img1->setTrick($trick1);
-        $img2 =new Picture();
-        $img2->setFile('test2.jpg');
-        $img2->setTrick($trick1);
-
-        $manager->persist($img1);
-        $manager->persist($img2);
-        $manager->persist($trick1);
-        $manager->flush();
-
-        return $this->redirectToRoute('trick_index');
-    }
-    /**
+       /**
      * @Route("/blog", name="trick_index", methods={"GET"})
      */
     public function index(TrickRepository $trickRepository): Response
@@ -127,12 +105,12 @@ class TrickController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="trick_edit")
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Trick $trick, Request $request, FileUploader $fileUploader, ObjectManager $manager): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
-        dump($trick);
         if ($form->isSubmitted() && $form->isValid()) {
             // Ajout image
             foreach($trick->getPictures() as $pict){
