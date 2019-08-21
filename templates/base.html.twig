@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    <body class="bg-dark">
         <div class="container">
             {% block body %}
                 <nav class="navbar sticky-top nav-pills navbar-expand-lg navbar-dark bg-dark">
@@ -41,7 +41,6 @@
                         </ul>
                     </div>
                 </nav>
-
             {% endblock %}
         </div>
         {% block javascripts %}

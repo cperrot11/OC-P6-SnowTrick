@@ -10843,12 +10843,16 @@ label,
   height: 60px;
   width: 125px;
   position: absolute;
+  animation: 3s linear 1s slidein;
+  /* animation: 4s linear 0s infinite alternate move_eye; */
 }
+@keyframes move_eye { from { margin-left:-20%; } to { margin-left:100%; }  }
 /* Perso */
 .slogan {
   position: absolute;
-  margin-top: 24%;
+  margin-top: 22%;
   margin-left: 12%;
+  text-align: center;
   color: black;
   font-size: 3vw;
   text-shadow: 1px 2px 4px #aff7ff;
@@ -10963,6 +10967,10 @@ label,
     width: 100%;
   }
 }
+.navbar {
+  margin-right: -15px ;
+  margin-left: -15px ;
+}
 
 .trick-title{
   position: absolute;
@@ -10999,3 +11007,5 @@ label,
   margin: auto;
   max-width: 700px;
 }
+
+

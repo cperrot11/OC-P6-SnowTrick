@@ -4,9 +4,9 @@
 
 {% block body %}
     {{ parent() }}
-    <section class="row">
+    <section class="row" id="accueil">
         <img class="img-fluid" src="\images\mattias-olsson-160612-unsplash.jpg">
-        <h1 class="slogan"> Les figures de Snowboard dans tous les sens !</h1>
+        <h1 class="slogan"> Les figures de Snowboard <br/> dans tous les sens !</h1>
         <a id="fleche" href="#start" data-toggle="tooltip" title="Découvrir la suite" class="fas fa-angle-double-down"></a>
 
 
@@ -20,27 +20,26 @@
     <section class="row">
         <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length -1}} en ce moment).</h3>
             {% for trick in tricks %}
-                <article class="trick-display">
-                    <div class="card text-white bg-secondary m-1">
+                <div class="card border-light mb-3 trick-display">
+                    <div class="card-body">
                         {% if trick.pictures|length>0 %}
                             <a href="{{ path('trick_show', {'id': trick.id}) }}">
-                                <div class="card-body"><img src={{ trick.pictures[0].path}} alt="" style="width:100%"></div>
+                                    <img src={{ trick.pictures[0].path}} alt="" style="width:100%">
                             </a>
                         {% endif %}
-
-                        <div class="card-footer">
+                    </div>
+                    <div class="card-footer">
                             <a href="{{ path('trick_show', {'id': trick.id}) }}">
                                 {{ trick.name }}({{ trick.id}})
                             </a>
-                            {% if is_granted('ROLE_USER') %}
-                            <span>
-                                <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
-                                <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
+                            <span class="float-right">
+                                {% if is_granted('ROLE_USER') %}
+                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
+                                    <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
+                                {% endif %}
                             </span>
-                            {% endif %}
-                        </div>
                     </div>
-                </article>
+                </div>
                 <span id="trickList"></span>
             {% else %}
                 <div>

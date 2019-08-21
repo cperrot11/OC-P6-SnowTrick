@@ -1,6 +1,6 @@
     {% for trick in tricks %}
-        <article class="trick-display">
-            <div class="card text-white bg-secondary m-1">
+        <div class="card border-light mb-3 trick-display">
+            <div class="card-body">
                 {% if trick.pictures|length>0 %}
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">
                         <div class="card-body"><img src={{ trick.pictures[0].file}} alt="" style="width:100%"></div>
@@ -11,15 +11,15 @@
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">
                         {{ trick.name }}({{ trick.id}})
                     </a>
-                    {% if is_granted('ROLE_USER') %}
-                        <span>
-                                <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
-                                <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
-                        </span>
-                    {% endif %}
+                    <span class="float-right">
+                                {% if is_granted('ROLE_USER') %}
+                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
+                                    <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
+                                {% endif %}
+                    </span>
                 </div>
             </div>
-        </article>
+        </div>
         <span id="trickList"></span>
     {% else %}
         <div>
