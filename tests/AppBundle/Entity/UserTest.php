@@ -27,11 +27,11 @@ class UserTest extends TestCase
         $this->assertSame('christophe',$user->getUsername());
     }
 
-    public function testAddComment()
+    public function testAddRemoveComment()
     {
         // Comment test ça ?
         $user = new User();
         $comment = new Comment();
-
     }
+
 }
