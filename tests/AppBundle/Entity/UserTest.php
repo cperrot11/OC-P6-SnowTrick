@@ -12,9 +12,9 @@
  * @link http://wwww.perrotin.eu
  */
 
-namespace App\Tests\AppBundle\Entity;
+namespace App\Entity;
 
-use App\Entity\User;
+
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
@@ -27,5 +27,11 @@ class UserTest extends TestCase
         $this->assertSame('christophe',$user->getUsername());
     }
 
-    public function
+    public function testAddComment()
+    {
+        // Comment test ça ?
+        $user = new User();
+        $comment = new Comment();
+
+    }
 }
