@@ -10843,10 +10843,9 @@ label,
   height: 60px;
   width: 125px;
   position: absolute;
-  animation: 3s linear 1s slidein;
-  /* animation: 4s linear 0s infinite alternate move_eye; */
+  animation: 1s linear 1s slidein;
 }
-@keyframes move_eye { from { margin-left:-20%; } to { margin-left:100%; }  }
+@keyframes slidein { from { margin-left:-20%; } to { margin-left:0%; }  }
 /* Perso */
 .slogan {
   position: absolute;
