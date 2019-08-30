@@ -29,7 +29,7 @@ class UserTest extends TestCase
 
     public function testId()
     {
-        $this->assertIsInt($this->user->getId());
+        $this->assertNull($this->user->getId());
     }
 
     public function testUsername()
