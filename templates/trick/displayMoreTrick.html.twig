@@ -1,12 +1,12 @@
     {% for trick in tricks %}
-        <div class="card border-light mb-3 trick-display">
+        <div class="card border-light mb-3 trick-display cpTremble">
             <div class="card-body">
                 {% if trick.pictures|length>0 %}
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">
                         <div class="card-body"><img src={{ trick.pictures[0].file}} alt="" style="width:100%"></div>
                     </a>
                 {% endif %}
-
+            </div>
                 <div class="card-footer">
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">
                         {{ trick.name }}({{ trick.id}})
@@ -18,7 +18,7 @@
                                 {% endif %}
                     </span>
                 </div>
-            </div>
+
         </div>
         <span id="trickList"></span>
     {% else %}

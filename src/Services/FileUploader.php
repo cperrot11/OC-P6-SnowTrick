@@ -33,7 +33,7 @@ class FileUploader
      * @param Image $image
      * @return Image $image
      */
-    public function saveImage(Picture $image): Picture
+    public function saveImage(Picture $image): string
     {
         // Récupère le fichier de l'image uploadée
         $file = $image->getFile();
@@ -42,11 +42,24 @@ class FileUploader
         $image->setName($name);
         // Déplace le fichier
         $path = 'uploads';
-        $file->move($path, $name);
+        $file->move($this->getTargetDirectory(), $name);
 
         return $image;
     }
+    public function upload(UploadedFile $file)
+    {
+        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
+        try {
+            $file->move($this->getTargetDirectory(), $fileName);
+        } catch (FileException $e) {
+            // ... handle exception if something happens during file upload
+        }
+
+        return $fileName;
+    }
     public function getTargetDirectory()
     {
         return $this->targetDirectory;

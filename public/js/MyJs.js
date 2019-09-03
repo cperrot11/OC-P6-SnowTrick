@@ -1,29 +1,33 @@
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addTagButton = $('<button type="button" class="btn btn-primary">Nouvelle image</button>');
-var $newLinkLi = $('<span></span>').append($addTagButton);
+var $addPictButton = $('<button type="button" class="btn btn-primary">Nouvelle image</button>');
+var $addVideoButton = $('<button type="button" class="btn btn-primary">Nouvelle vidéo</button>');
+var $newLinkLi = $('<span></span>').append($addPictButton);
+var $newLinkLi2 = $('<span></span>').append($addVideoButton);
+var demoTimeout;
 
 jQuery(document).ready(function() {
-    console.log("MyJS");
-    // Get the ul that holds the collection of tags
-    $collectionHolder = $('ul.medias_full');
+
+    // Get the ul that holds the collection of picture/video
+    $collectionHolder1 = $('ul.medias_pictures');
+
 
     // add a delete link to all of the existing tag form li elements
-    $collectionHolder.find('li').each(function() {
+    $collectionHolder1.find('li').each(function() {
         addTagFormDeleteLink($(this));
     });
 
     // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
+    $collectionHolder1.append($newLinkLi);
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+    $collectionHolder1.data('index', $collectionHolder1.find(':input').length);
 
-    $addTagButton.on('click', function(e) {
+    $addPictButton.on('click', function(e) {
         // add a new tag form (see next code block)
-        addArticleForm($collectionHolder, $newLinkLi);
+        addArticleForm($collectionHolder1, $newLinkLi);
         $('#article_media___name___rec').on('click',function(a) {
             a.preventDefault();
             var adresse = "{{ path('blog') }}";
@@ -37,6 +41,30 @@ jQuery(document).ready(function() {
             });
         });
     });
+    //Same for video
+    $collectionHolder2 = $('ul.medias_videos');
+    $collectionHolder2.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+    $collectionHolder2.append($newLinkLi2);
+    $collectionHolder2.data('index', $collectionHolder2.find(':input').length);
+
+    $addVideoButton.on('click', function(e) {
+        addArticleForm($collectionHolder2, $newLinkLi2);
+        $('#article_media___name___rec').on('click',function(a) {
+            a.preventDefault();
+            var adresse = "{{ path('blog') }}";
+            alert(adresse);
+            $.ajax({
+                url: "{{ path('trick_new') }}",
+                method: "POST",
+                data: {
+                    "media_name": 'tot'
+                }
+            });
+        });
+    });
+    cp_tremble();
 
 });
 
@@ -73,4 +101,20 @@ function addTagFormDeleteLink($tagFormLi) {
         $tagFormLi.remove();
     });
 };
+function cp_tremble() {
+    $(".cpTremble").jrumble({
+        x: 2,
+        y: 2,
+        rotation: 1,
+        speed: 50
+    });
+    $(".cpTremble").hover(function(){
+        $this = $(this);
+        clearTimeout(demoTimeout);
+        $(this).trigger("startRumble");
+        demoTimeout = setTimeout(function(){$this.trigger("stopRumble");}, 600);
+    }, function(){
+        $(this).trigger("stopRumble");
+    });
+}
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthentificatorAuthenticator;
+use App\Services\FileUploader;
 use App\Services\Mailer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, Mailer $mailer, TokenGeneratorInterface $tokenGenerator): Response
+    public function register(Request $request,FileUploader $fileUploader , UserPasswordEncoderInterface $passwordEncoder, Mailer $mailer, TokenGeneratorInterface $tokenGenerator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -40,6 +41,13 @@ class RegistrationController extends AbstractController
             // enregistrement de la date de création du token
             $user->setPasswordRequestedAt(new \Datetime());
             $user->setActiv(0);
+
+            $picture = $form['picture']->getData();
+            $pictFile = $picture->getFile();
+            $pictFileName = $fileUploader->upload($pictFile);
+            $picture->setName($pictFileName);
+
+            $user->setPicture($picture);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

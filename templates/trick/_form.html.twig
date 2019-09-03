@@ -4,8 +4,7 @@
     {{ form_row(form.category) }}
     <section>
         <h3>Liste des images</h3>
-        <ul class="medias_full" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}">
-            {#<ul>#}
+        <ul class="medias_pictures" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}">
                 {% for pict in form.pictures %}
                     {#vérifie si l'image existe ?#}
                     {% if pict.vars.data.name %}
@@ -15,12 +14,15 @@
                         </li>
                     {% endif %}
                 {% endfor %}
-            {#</ul>#}
         </ul>
         <h3>Liste des vidéos</h3>
-        <ul class="">
+        <ul class="medias_videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
                 {% for video in form.videos %}
-                    <li>{{ form_row(video.link) }}</li>
+                    <li>
+                        {{ form_row(video.link) }}
+
+                    </li>
+
                 {% endfor %}
         </ul>
     </section>

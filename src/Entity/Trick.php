@@ -42,7 +42,8 @@ class Trick
     private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick")
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", orphanRemoval=true,
+     * cascade={"persist", "remove"}))
      */
     private $videos;
 
@@ -148,8 +149,8 @@ class Trick
 
     public function addVideo(Video $video): self
     {
-        if (!$this->video->contains($video)) {
-            $this->video[] = $video;
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
             $video->setTrick($this);
         }
         return $this;

@@ -20,7 +20,7 @@
     <section class="row">
         <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length -1}} en ce moment).</h3>
             {% for trick in tricks %}
-                <div class="card border-light mb-3 trick-display">
+                <div class="card border-light mb-3 trick-display cpTremble">
                     <div class="card-body">
                         {% if trick.pictures|length>0 %}
                             <a href="{{ path('trick_show', {'id': trick.id}) }}">
@@ -70,6 +70,7 @@
                     method: "GET",
                     success: function (response) {
                         $('#readMore').before(response);
+                        cp_tremble();
                     }}
                 );
             })
