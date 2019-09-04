@@ -61,7 +61,14 @@
 }
 .trick-display {
     width: 20%;
-    border-radius: 10%;
+    border-radius: 20px;
+}
+.card-footer {
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.card {
+    background-color: #8B8C89;
 }
 .vignette {
     display: flex;
@@ -210,4 +217,12 @@ a, body{
 }
 a:hover, .nav-link:hover {
     color: #6096BA !important;
+}
+.avatar{
+    width: 80px !important;
+    height: auto !important;
+}
+.badge-primary {
+    color: #4E5D6C ;
+    background-color: #A3CEF1 ;
 }

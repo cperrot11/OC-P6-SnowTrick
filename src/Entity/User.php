@@ -181,7 +181,7 @@ class User implements UserInterface
 
     public function getPicture(): ?string
     {
-        return $this->picture;
+        return '/uploads/'.$this->picture;
     }
 
     public function setPicture(?string $picture): self

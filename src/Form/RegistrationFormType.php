@@ -30,6 +30,7 @@ class RegistrationFormType extends AbstractType
                         'mimeTypesMessage' => 'Choisir un fichier de type image uniquement',
                     ])
                 ],
+                'data_class' => null,
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,

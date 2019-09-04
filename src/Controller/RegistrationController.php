@@ -42,12 +42,10 @@ class RegistrationController extends AbstractController
             $user->setPasswordRequestedAt(new \Datetime());
             $user->setActiv(0);
 
-            $picture = $form['picture']->getData();
-            $pictFile = $picture->getFile();
+            $pictFile = $form['picture']->getData();
             $pictFileName = $fileUploader->upload($pictFile);
-            $picture->setName($pictFileName);
 
-            $user->setPicture($picture);
+            $user->setPicture($pictFileName);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

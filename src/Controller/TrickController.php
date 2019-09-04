@@ -69,9 +69,9 @@ class TrickController extends AbstractController
                     $picture->setName($pictFileName);
                     $manager->persist($picture);
                 }
-                foreach ($form['videos']->getData() as $video){
-                    dump($video);
-                }
+//                foreach ($form['videos']->getData() as $video){
+//                    dump($video);
+//                }
             }
             $manager->flush();
 

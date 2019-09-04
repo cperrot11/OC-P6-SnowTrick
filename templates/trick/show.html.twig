@@ -55,6 +55,9 @@
         {% for comment in trick.comments %}
             <div class="comment">
                 <div class="row">
+                    <div class="col-2">
+                        <img class="img-thumbnail avatar" src={{ comment.user.picture }} alt={{ comment.user.username }}>
+                    </div>
                     <div class="col-3">
                         {{ comment.user.username }} <small>({{ comment.creationDate | date('d/m/Y à H:i') }})</small>
                     </div>
