@@ -8,6 +8,13 @@
             <div class="row aLaUne">
                 {% if trick.pictures|length > 0 %}
                     <img class="contenu" src={{ trick.pictures[0].path }}>
+                    {% if is_granted('ROLE_USER') %}
+                        <h3 class="icon">
+
+                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}" data-toggle="tooltip" title="Modifier" class="fas fa-pen text-right" ></a>
+                                    <a href="{{ path('trick_delete', {'id': trick.id}) }}" data-toggle="tooltip" title="Supprimer" class="fas fa-trash-alt text-right"></a>
+                        </h3>
+                    {% endif %}
                 {% else %}
                     <img src="..\public\images\vide.jpg" >
                 {% endif %}
@@ -51,22 +58,29 @@
                 </div>
             {% endif %}
     </article>
+    {%  if (trick.comments.count>0)%}
+        <hr>
+    {% endif %}
     <section>
         {% for comment in trick.comments %}
             <div class="comment">
+
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-1">
                         <img class="img-thumbnail avatar" src={{ comment.user.picture }} alt={{ comment.user.username }}>
                     </div>
-                    <div class="col-3">
-                        {{ comment.user.username }} <small>({{ comment.creationDate | date('d/m/Y à H:i') }})</small>
-                    </div>
-                    <div class="col">
-                        {{ comment.description }}
-                    </div>
+                    <span class="comment-border col-10">
+                        <div class="col-4">
+                            {{ comment.user.username }} <small>({{ comment.creationDate | date('d/m/Y à H:i') }})</small>
+                        </div>
+                        <div class="col">
+                            {{ comment.description }}
+                        </div>
+                    </span>
                 </div>
             </div>
         {% endfor %}
+        <hr>
         {% if app.user %}
             {{ form_start(commentForm) }}
             {{ form_row(commentForm.description, {'attr' : {'placeholder': "Votre commentaire"}}) }}

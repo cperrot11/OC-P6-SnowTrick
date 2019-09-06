@@ -16,7 +16,7 @@
 }
 .container{
     position: relative;
-    width: 100%
+    width: 100%;
 }
 .container video{
     position: absolute;
@@ -41,9 +41,9 @@
     position: absolute;
     margin-top: 3%;
     text-align: center;
-    color: #4E5D6C;
+    color: #A3CEF1;
     font-size: 3vw;
-    text-shadow: 2px 2px 1px #A3CEF1;
+    text-shadow: 3px 4px 1px #4E5D6C;
 }
 #fleche{
     color : #4E5D6C !important;
@@ -62,6 +62,13 @@
 .trick-display {
     width: 20%;
     border-radius: 20px;
+}
+hr{
+    size: 5px ;
+    width: 80%;
+    border: solid 2px;
+    border-radius: 10px ;
+    color: #E7ECEF;;
 }
 .card-footer {
     border-bottom-right-radius: 20px;
@@ -107,6 +114,19 @@
     display: block;
     width: 80%;
     max-width: 700px;
+}
+.footer{
+    bottom: 0;
+    width: 100%;
+}
+.footer hr {
+    size: 5px ;
+    border: solid 1px ;
+    color: #6096BA ;
+}
+.footer div {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* Caption of Modal Image */
@@ -169,7 +189,7 @@
     margin-left: -15px ;
 }
 
-.trick-title{
+.trick-title {
     position: absolute;
     color: rgba(0,0,0,0.8);
     background-color: white;
@@ -225,4 +245,45 @@ a:hover, .nav-link:hover {
 .badge-primary {
     color: #4E5D6C ;
     background-color: #A3CEF1 ;
+}
+.icon {
+    margin-top: 10px;
+    position: absolute;
+    border-radius: 5px;
+    background-color: #4E5D6C;
+    border-color: #E7ECEF;
+    border: solid;
+    padding: 4px;
+    right: 1vw;
+}
+.icon a {
+    margin: 0 0 3px 3px;
+}
+.action {
+    border: solid 2px;
+    border-radius: 10px;
+    padding: 3px;
+    margin-left: 10px;
+    background-color: #6096BA;
+}
+.action:hover {
+    color: #4E5D6C !important;
+    border: solid 3px;
+}
+
+.comment-border{
+    display: flex;
+    border: solid 1px #6096BA;
+    border-radius: 2px;
+    padding: 2px;
+}
+#logo2{
+    height: 50px ;
+    width: 105px ;
+}
+.rustine{
+    size: 5px ;
+    border: solid 1px ;
+    color: #6096BA ;
+    width : 100%;
 }

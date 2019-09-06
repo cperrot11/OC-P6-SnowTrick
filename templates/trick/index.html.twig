@@ -18,7 +18,11 @@
         {% endfor %}
     </section>
     <section class="row">
-        <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length -1}} en ce moment).</h3>
+        <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length -1}} en ce moment).
+        {% if is_granted('ROLE_USER') %}
+            <a class="action" href="{{ path('trick_new') }}">Nouvelle figure</a>
+        {% endif %}
+        </h3>
             {% for trick in tricks %}
                 <div class="card border-light mb-3 trick-display cpTremble">
                     <div class="card-body">
@@ -34,8 +38,8 @@
                             </a>
                             <span class="float-right">
                                 {% if is_granted('ROLE_USER') %}
-                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
-                                    <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
+                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}" data-toggle="tooltip" title="Modifier" class="fas fa-pen text-right"></a>
+                                    <a href="{{ path('trick_delete', {'id': trick.id}) }}" data-toggle="tooltip" title="Supprimer" class="fas fa-trash-alt text-right"></a>
                                 {% endif %}
                             </span>
                     </div>
@@ -46,16 +50,13 @@
                     <span colspan="4">no records found</span>
                 </div>
             {% endfor %}
-            <a id="readMore">
+            <a id="readMore" class="action">
                 <h3 id="follow" class="text-center col-12">
                     <i class="fas fa-book-reader"></i>
                         Voir plus...
                 </h3>
             </a>
     </section>
-    {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('trick_new') }}">Create new</a>
-    {% endif %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

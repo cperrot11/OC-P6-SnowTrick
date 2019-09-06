@@ -4,9 +4,11 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>Mise à jour des figures</h1>
-        {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
-        <a href="{{ path('trick_index') }}">back to list</a>
+    <h1 class="slogan">Mise à jour des figures</h1>
+    <img src="\images\unsplash.jpg" style="width: inherit">
+
+        {{ include('trick/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
 
         {{ include('trick/_delete_form.html.twig') }}
 {% endblock %}
