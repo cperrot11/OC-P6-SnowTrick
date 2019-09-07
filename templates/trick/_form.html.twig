@@ -1,7 +1,17 @@
 {{ form_start(form) }}
-    {{ form_row(form.name) }}
+    <div class="row">
+        <div class="col-6">
+            {{ form_label(form.name, 'Nom de la figure') }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="float-right col-3">
+            {{ form_label(form.category, 'Catégorie') }}
+            {{ form_widget(form.category) }}
+        </div>
+    </div>
+
     {{ form_row(form.description) }}
-    {{ form_row(form.category) }}
+    <hr>
     <section>
         <h3>Liste des images</h3>
         <ul class="medias_pictures" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}">
@@ -18,17 +28,16 @@
         <h3>Liste des vidéos</h3>
         <ul class="medias_videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
                 {% for video in form.videos %}
-                    <li>
-                        {{ form_row(video.link) }}
-
+                    <li class="row d-flex align-items-center">
+                        <div>{{ form_label(video.link) }}</div>
+                        <div class="ml-2">{{ form_widget(video.link) }}</div>
                     </li>
-
                 {% endfor %}
         </ul>
     </section>
 
 
-    <button class="btn">{{ button_label|default('Save') }}</button>
-    {#{% do form.pictures.setRendered() %}#}
+    <button class="action d-block m-auto">{{ button_label|default('Save') }}</button>
+
     {{ form_row(form._token) }}
 {{ form_end(form, {'render_rest':false}) }}

@@ -273,6 +273,7 @@ a:hover, .nav-link:hover {
     margin: 0 0 3px 3px;
 }
 .action {
+    color: #E7ECEF;
     border: solid 2px;
     border-radius: 10px;
     padding: 3px;
@@ -280,6 +281,17 @@ a:hover, .nav-link:hover {
     background-color: #6096BA;
 }
 .action:hover {
+    color: #4E5D6C !important;
+    border: solid 3px;
+}
+.action-del {
+    border: solid 2px;
+    border-radius: 10px;
+    padding: 3px;
+    margin-left: 10px;
+    background-color: darkred;
+}
+.action-del:hover {
     color: #4E5D6C !important;
     border: solid 3px;
 }
@@ -300,4 +312,11 @@ a:hover, .nav-link:hover {
     color: #6096BA ;
     width : 100%;
     margin-bottom: 0.5rem;
+}
+form{
+    border: solid 1px #6096BA;
+    border-radius: 10px;
+    padding: 2vh;
+    margin: 2vh 10vh 2vh 10vh;
+    background-color: #8B8C89;
 }

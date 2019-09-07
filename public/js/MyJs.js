@@ -1,8 +1,8 @@
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addPictButton = $('<button type="button" class="btn btn-primary">Nouvelle image</button>');
-var $addVideoButton = $('<button type="button" class="btn btn-primary">Nouvelle vidéo</button>');
+var $addPictButton = $('<button type="button" class="action mt-2">Nouvelle image</button>');
+var $addVideoButton = $('<button type="button" class="action mt-2">Nouvelle vidéo</button>');
 var $newLinkLi = $('<span></span>').append($addPictButton);
 var $newLinkLi2 = $('<span></span>').append($addVideoButton);
 var demoTimeout;
@@ -93,7 +93,7 @@ function addArticleForm($collectionHolder, $newLinkLi) {
     $newLinkLi.before($newFormLi);
 }
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormButton = $('<button type="button" class="btn btn-danger">Supprimer</button>');
+    var $removeFormButton = $('<button type="button" class="action fas fa-trash-alt text-right" title="Effacer"></button>');
     $tagFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function (e) {

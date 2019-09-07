@@ -4,7 +4,9 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>Renouvellement du mot de passe</h1>
+    <h1 class="slogan">Renouvellement du mot de passe</h1>
+    <img src="\images\unsplash.jpg" style="width: inherit">
+
     {% for flashMessage in app.session.flashBag.get('warning') %}
         <div class="alert alert-dismissible alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -12,7 +14,10 @@
         </div>
     {% endfor %}
     {{form_start(form)}}
+    <h1 class="h3 mb-3 font-weight-normal">Saisir votre adresse e-mail</h1>
         {{ form_row(form.email) }}
-        <button class="btn btn-primary" type="submit">Envoyer</button>
+    <p>Un e-mail va vous être envoyer afin de renouveller votre mot de passe.</p>
+
+    <button class="action d-block m-auto" type="submit">Envoyer</button>
     {{form_end(form)}}
 {% endblock %}

@@ -12,7 +12,12 @@ class VideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('link')
+            ->add('link',null,[
+                'label'=>'Lien vidéo :',
+                'attr'=>[
+                    'placeholder'=>'Saisir la fin de l\'url youtube (l18w36iI9LU) dans https://youtu.be/l18w36iI9LU ',
+                ]
+            ])
         ;
     }
 

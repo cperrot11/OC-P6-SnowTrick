@@ -2,12 +2,15 @@
 
 {% block body %}
     {{ parent() }}
+    <h1 class="slogan">Renouvellement du mot de passe</h1>
+    <img src="\images\unsplash.jpg" style="width: inherit">
 
-    <h1>Renouvellement du mot de passe</h1>
+
     {{form_start(form)}}
+        <h1 class="h3 mb-3 font-weight-normal">Saisir votre nouveau mot de passe</h1>
         {{form_row(form.Password.first)}}
         {{form_row(form.Password.second)}}
-        <button class=""  type="submit">Envoyer</button>
+        <button class="action"  type="submit">Envoyer</button>
     {{form_end(form)}}
 
 {% endblock %}

@@ -81,13 +81,15 @@
             {{ form_row(commentForm._token) }}
             {{ form_end(commentForm, {'render_rest': false}) }}
         {% else %}
-            <h2>Vous ne pouvez pas commenter, sans être logué.</h2>
-            <a href="{{ path('app_login') }}" class="btn btn-primary">Connexion</a>
+            <div class="row justify-content-around">
+                <h2>Vous ne pouvez pas commenter, sans être indentifié.</h2>
+                <a href="{{ path('app_login') }}" class="action">Connexion</a>
+            </div>
         {% endif %}
 
     </section>
 
-    <a href="{{ path('trick_index') }}">back to list</a>
+    <a href="{{ path('trick_index') }}">Retour à l'accueil</a>
 
 {% endblock %}
 {% block javascripts %}
