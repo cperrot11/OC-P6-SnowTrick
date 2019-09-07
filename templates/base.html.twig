@@ -42,14 +42,21 @@
                         </ul>
                     </div>
                 </nav>
-
+                {#{% block slogan %}#}
+                    {#{% if slogan is defined %}#}
+                        {#{{ dump(slogan) }}#}
+                        {#<h1 class="slogan">{{ slogan }}</h1>#}
+                        {#<img src="\images\unsplash.jpg" style="width: inherit">#}
+                    {#{% endif %}#}
+                {#{% endblock %}#}
             {% endblock %}
-            <hr class="rustine">
+
             <footer class="footer">
+                <hr class="rustine">
                 <div class="row col-12" >
                     <img id="logo2" src="{{ asset('images/logo2.png') }}">
                     <h5>Site communautaire basé sur les figures de snowboard</h5>
-                    <h5 class="font-italic">copyright 2019.</h5>
+                    <h5 class="font-italic">copyright @ 2019.</h5>
                 </div>
             </footer>
         </div>

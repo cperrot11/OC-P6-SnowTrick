@@ -52,6 +52,13 @@
     margin-top: -3%;
     font-size: x-large;
 }
+#fleche2{
+    color : #4E5D6C !important;
+    animation: colorblink 2s infinite;
+    margin-left: 97%;
+    transform: translateY(35px);
+    font-size: x-large;
+}
 @keyframes colorblink {
     0% { }
     50% { color:#A3CEF1; }
@@ -115,8 +122,13 @@ hr{
     width: 80%;
     max-width: 700px;
 }
+body{
+    height: 100vh;
+}
 .footer{
-    bottom: 0;
+    position: absolute;
+    bottom: -86vh;
+
     width: 100%;
 }
 .footer hr {
@@ -204,6 +216,7 @@ hr{
 }
 .aLaUne{
     justify-content: center;
+    margin-bottom: 10px;
 }
 .trick-info{
     justify-content: space-around;
@@ -286,4 +299,5 @@ a:hover, .nav-link:hover {
     border: solid 1px ;
     color: #6096BA ;
     width : 100%;
+    margin-bottom: 0.5rem;
 }
