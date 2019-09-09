@@ -8,8 +8,9 @@
     <h1 class="slogan">Mise à jour de figure</h1>
     <img src="\images\unsplash.jpg" style="width: inherit">
 
-        {{ include('trick/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
-
-
+    {{ include('trick/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    <sapn class="action d-inline-flex">
+        Supprimer 
         {{ include('trick/_delete_form.html.twig') }}
+    </sapn>
 {% endblock %}

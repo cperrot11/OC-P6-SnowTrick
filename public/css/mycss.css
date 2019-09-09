@@ -248,7 +248,7 @@ body{
 a, body{
     color:#E7ECEF !important;
 }
-a:hover, .nav-link:hover {
+a:hover, .nav-link:hover, .form-hidden button {
     color: #6096BA !important;
 }
 .avatar{
@@ -319,4 +319,17 @@ form{
     padding: 2vh;
     margin: 2vh 10vh 2vh 10vh;
     background-color: #8B8C89;
+}
+.form-hidden,.form-hidden button {
+    border: none;
+    border-radius: unset;
+    padding: unset;
+    margin: unset;
+    background-color: unset;
+    color: #E7ECEF !important;
+    padding: unset;
+}
+.card-footer .float-right {
+    display: flex;
+    align-items: baseline;
 }
