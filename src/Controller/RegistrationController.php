@@ -41,11 +41,12 @@ class RegistrationController extends AbstractController
             // enregistrement de la date de création du token
             $user->setPasswordRequestedAt(new \Datetime());
             $user->setActiv(0);
+            if (!is_null($form['picture']->getData())){
+                $pictFile = $form['picture']->getData();
+                $pictFileName = $fileUploader->upload($pictFile);
+                $user->setPicture($pictFileName);
+            }
 
-            $pictFile = $form['picture']->getData();
-            $pictFileName = $fileUploader->upload($pictFile);
-
-            $user->setPicture($pictFileName);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

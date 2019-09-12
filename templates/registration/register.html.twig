@@ -13,7 +13,9 @@
         </div>
     {% endfor %}
 
+
     {{ form_start(registrationForm) }}
+
     <h1 class="h3 mb-3 font-weight-normal">Créez votre compte</h1>
         {{ form_row(registrationForm.username) }}
         {{ form_row(registrationForm.picture) }}
@@ -22,4 +24,6 @@
 
         <button class="action d-block m-auto">Enregistrement</button>
     {{ form_end(registrationForm) }}
+    {#add margin for footer#}
+    <h5 class="form-register"></h5>
 {% endblock %}

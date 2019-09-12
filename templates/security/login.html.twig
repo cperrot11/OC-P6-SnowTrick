@@ -6,7 +6,7 @@
     {{ parent() }}
     <h1 class="slogan">Connexion</h1>
     <img src="\images\unsplash.jpg" style="width: inherit">
-<form method="post">
+<form method="post" class="form-login">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}

@@ -1,10 +1,13 @@
+<div class="row">
     {% for trick in tricks %}
         <div class="card border-light mb-3 trick-display cpTremble">
             <div class="card-body">
                 {% if trick.pictures|length>0 %}
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">
-                        <div class="card-body"><img src={{ trick.pictures[0].file}} alt="" style="width:100%"></div>
+                        <img src={{ trick.pictures[0].file}} alt="">
                     </a>
+                {% else %}
+                    <img src="/images/vide.jpg">
                 {% endif %}
             </div>
                 <div class="card-footer">
@@ -14,7 +17,7 @@
                     <span class="float-right">
                                 {% if is_granted('ROLE_USER') %}
                                     <a href="{{ path('trick_edit', {'id': trick.id}) }}" class="fas fa-pen text-right"></a>
-                                    <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="fas fa-trash-alt text-right"></a>
+                                    {{ include('trick/_delete_form.html.twig') }} {#Permet l'utilisation le token#}
                                 {% endif %}
                     </span>
                 </div>
@@ -23,7 +26,8 @@
         <span id="trickList"></span>
     {% else %}
         <div>
-            <span colspan="4">no records found</span>
+            <span colspan="4">Pas de figures disponible</span>
         </div>
     {% endfor %}
     <a id="fleche2" href="#accueil" data-toggle="tooltip" title="Haut de page" class="fas fa-angle-double-up"></a>
+</div>

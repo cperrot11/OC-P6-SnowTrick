@@ -21,7 +21,7 @@ class RegistrationFormType extends AbstractType
                 'label'=>'identifiant',
             ])
             ->add('picture', FileType::class, [
-                'label' => 'Images (jpg, bmp, png)',
+                'label' => 'Avatar : images (jpg, bmp, png)',
                 'required' => false,
                 'constraints' => [
                     new File([

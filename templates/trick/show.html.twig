@@ -9,13 +9,13 @@
                 {% if trick.pictures|length > 0 %}
                     <img class="contenu" src={{ trick.pictures[0].path }}>
                     {% if is_granted('ROLE_USER') %}
-                        <h3 class="icon">
+                        <h3 class="icon d-inline-flex">
                                     <a href="{{ path('trick_edit', {'id': trick.id}) }}" data-toggle="tooltip" title="Modifier" class="fas fa-pen text-right" ></a>
-                                    <a href="{{ path('trick_delete', {'id': trick.id}) }}" data-toggle="tooltip" title="Supprimer" class="fas fa-trash-alt text-right"></a>
+                                    {{ include('trick/_delete_form.html.twig') }}
                         </h3>
                     {% endif %}
                 {% else %}
-                    <img src="..\public\images\vide.jpg" >
+                    <img src="/images/vide.jpg" >
                 {% endif %}
                 <h1 class="trick-title">{{ trick.name }}</h1>
             </div>
@@ -76,7 +76,7 @@
         {% if app.user %}
             {{ form_start(commentForm) }}
             {{ form_row(commentForm.description, {'attr' : {'placeholder': "Votre commentaire"}}) }}
-            <button type="submit" class="btn btn-success">Commenter</button>
+            <button type="submit" class="action">Commenter</button>
 
             {{ form_row(commentForm._token) }}
             {{ form_end(commentForm, {'render_rest': false}) }}

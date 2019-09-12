@@ -101,6 +101,9 @@ class TrickController extends AbstractController
 
             $manager->persist($comment);
             $manager->flush();
+            return $this->redirectToRoute("trick_show",[
+                'id'=>$trick->getId()
+            ]);
         }
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
@@ -118,11 +121,19 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Ajout image
-            foreach($trick->getPictures() as $pict){
-                /** @var UploadedFile $brochureFile */
-                if (!$pict->getId()){
-                    $pict = $fileUploader->saveImage($pict);
-                    $manager->persist($pict);
+//            foreach($trick->getPictures() as $pict){
+//                /** @var UploadedFile $brochureFile */
+//                if (!$pict->getId()){
+//                    $pict = $fileUploader->saveImage($pict);
+//                    $manager->persist($pict);
+//                }
+//            }
+            foreach ($form['pictures']->getData() as $picture){
+                if(!$picture->getId()){
+                    $pictFile = $picture->getFile();
+                    $pictFileName = $fileUploader->upload($pictFile);
+                    $picture->setName($pictFileName);
+                    $manager->persist($picture);
                 }
             }
             $manager->persist($trick);
@@ -150,7 +161,7 @@ class TrickController extends AbstractController
                 $entityManager->remove($trick);
                 $entityManager->flush();            }
             else{
-
+                $this->addFlash("error","Erreur token....");
             }
         return $this->redirectToRoute('trick_index');
     }

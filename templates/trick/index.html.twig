@@ -17,19 +17,24 @@
             </div>
         {% endfor %}
     </section>
-    <section class="row">
-        <h3 id="start" class="text-center col-12">De nombreuses figures sont à votre disposition ({{ tricks|length -1}} en ce moment).
-        {% if is_granted('ROLE_USER') %}
-            <a class="action" href="{{ path('trick_new') }}">Nouvelle figure</a>
-        {% endif %}
-        </h3>
+    <section>
+        <div class="row justify-content-around p-3">
+            <h3 id="start" class="nb-fig1">De nombreuses figures sont à votre disposition ({{ tricks|length -1}} en ce moment).</h3>
+            <h3 id="start" class="nb-fig2">Déjà {{ tricks|length -1}} figures.</h3>
+            {% if is_granted('ROLE_USER') %}
+                <a class="action" href="{{ path('trick_new') }}">Nouvelle figure</a>
+            {% endif %}
+        </div>
+        <div class="row">
             {% for trick in tricks %}
                 <div class="card border-light mb-3 trick-display cpTremble">
                     <div class="card-body">
                         {% if trick.pictures|length>0 %}
                             <a href="{{ path('trick_show', {'id': trick.id}) }}">
-                                    <img src={{ trick.pictures[0].path}} alt="" style="width:100%">
+                                    <img class="" src={{ trick.pictures[0].path}} alt="" >
                             </a>
+                        {% else %}
+                            <img src="/images/vide.jpg">
                         {% endif %}
                     </div>
                     <div class="card-footer">
@@ -47,14 +52,15 @@
                 <span id="trickList"></span>
             {% else %}
                 <div>
-                    <span colspan="4">no records found</span>
+                    <span colspan="4">Pas de figures disponible</span>
                 </div>
             {% endfor %}
-            <a id="readMore" class="action">
-                <h3 id="follow" class="text-center col-12">
+        </div>
+            <a id="readMore" class="action d-flex col-md-2  col-sm-4 justify-content-center">
+                <span id="follow">
                     <i class="fas fa-book-reader"></i>
                         Voir plus...
-                </h3>
+                </span>
             </a>
     </section>
 {% endblock %}
