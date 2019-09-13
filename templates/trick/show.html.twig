@@ -84,7 +84,9 @@
                 </div>
             </div>
         {% endfor %}
-        <a class="action" id="more_comment">Afficher plus</a>
+        {%  if (trick.comments.count>0)%}
+            <a class="action" id="more_comment">Afficher plus</a>
+        {%  endif %}
         <hr id="end_comment">
         {% if app.user %}
             {{ form_start(commentForm) }}
