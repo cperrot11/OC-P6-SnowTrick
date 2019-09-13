@@ -21,7 +21,7 @@ This project also uses:
 
 
 ## Installation
-1. Clone this repository on your local machine by using this command line in your folder `git clone https://github.com/cperro11/OC-P6-SnowTrick.git`.
+1. Clone this repository on your local machine by using this command line in your folder `git clone https://github.com/cperrot11/OC-P6-SnowTrick.git`.
 2. In project folder open a new terminal window and execute command line `composer install`.
 3. Execute command line `php bin/console composer update`.
 4. Apply your database configuration in  `snowtricks/config/ini.php`.
