@@ -40,15 +40,17 @@ class TrickController extends AbstractController
         ]);
     }
     /**
-     * @Route("/ajax/comment/{click}/{id}", name="loadMoreComment", methods={"GET"})
+     * @Route("/ajax/comment/{id}", name="loadMoreComment", methods={"GET"})
      */
-    public function ajaxComment(Trick $trick, Request $request, CommentRepository $repository, $click=1)
+    public function ajaxComment(Trick $trick, Request $request, CommentRepository $repository)
     {
-        $begin = (($click-1)*getenv('LIMIT_COMMENT'))+1;
+        $click = $request->query->get('click');
+        $begin = (($click-1)*getenv('LIMIT_COMMENT'));
         $end = getenv('LIMIT_COMMENT');
-        $comment = $repository->findAllComment($trick, $begin, $end);
+        $comments = $repository->findAllComment($trick, $begin, $end);
+
         return $this->render('trick/displayMoreComment.html.twig', [
-            'comments' => $comment,
+            'comments' => $comments,
         ]);
     }
 
@@ -102,7 +104,7 @@ class TrickController extends AbstractController
     /**
      * @Route("/{id}", name="trick_show", methods={"GET","POST"})
      */
-    public function show(Trick $trick, Request $request, ObjectManager $manager): Response
+    public function show(Trick $trick, Request $request, ObjectManager $manager, CommentRepository $commentRepository): Response
     {
         $comment = new Comment();
         $comment->setCreationDate(new \DateTime());
@@ -122,6 +124,7 @@ class TrickController extends AbstractController
         }
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'comments' => $commentRepository->findAllComment($trick,0,getenv('LIMIT_COMMENT')),
             'commentForm'=>$form->createView()
         ]);
     }

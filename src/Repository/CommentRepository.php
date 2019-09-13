@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -51,7 +52,7 @@ class CommentRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('o')
             ->andWhere('o.trick =:val')
             ->setParameter('val', $trick)
-            ->orderBy('o.createdAt','desc')
+            ->orderBy('o.creationDate','desc')
             ->getQuery()
             ->setFirstResult($begin)
             ->setMaxResults($limit);

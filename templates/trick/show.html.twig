@@ -60,14 +60,14 @@
             </div>
 
             <div class="row trick-content">
-                <p> {{ trick.description | raw}} </p>
+                <p> Explication : {{ trick.description | raw}} </p>
             </div>
     </article>
     {%  if (trick.comments.count>0)%}
         <hr>
     {% endif %}
     <section>
-        {% for comment in trick.comments %}
+        {% for comment in comments %}
             <div class="comment">
                 <div class="row">
                     <div class="col-1">
@@ -84,8 +84,13 @@
                 </div>
             </div>
         {% endfor %}
+        {#Lien Ajax vers la route loadMoreComment #}
         {%  if (trick.comments.count>0)%}
-            <a class="action" id="more_comment">Afficher plus</a>
+            <div id="more_comment" data-route="{{ path('loadMoreComment',{id:trick.id} ) }}">
+                <br/>
+                <a class="action" >Afficher plus...</a>
+            </div>
+
         {%  endif %}
         <hr id="end_comment">
         {% if app.user %}
@@ -113,6 +118,8 @@
         // Get the modal
         var modalImg = document.getElementById("img01");
         var modalVideo = document.getElementById("video01");
+        var click = 1;
+        id = {{ trick.id }};
         jQuery(document).ready(function() {
             //1-Picture
             $('.img-thumbnail').click(function () {
@@ -137,17 +144,17 @@
                 $('#display').hide();
             });
             // More comment
-            {#$('#follow').on('click', function () {#}
-                {#click++;#}
-                {#$('more_comment').display=false;#}
-                {#return $.ajax({#}
-                    {#url: "{{ path('/trick/ajax/comment/{click}/{id}') }}"+'/'+click,#}
-                    {#method: "GET",#}
-                    {#success: function (response) {#}
-                        {#$('#end_comment').before(response);#}
-                    {#}}#}
-                {#);#}
-            {#})#}
+            $('#more_comment').on('click', function () {
+                click++;
+                return $.ajax({
+                    url: $('#more_comment').data('route'),
+                    data: {click},
+                    method: "GET",
+                    success: function (response) {
+                        $('#more_comment').before(response);
+                    }}
+                );
+            })
         })
     </script>
 
