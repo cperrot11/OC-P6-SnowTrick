@@ -39,7 +39,7 @@
                     </div>
                     <div class="card-footer">
                             <a href="{{ path('trick_show', {'id': trick.id}) }}">
-                                {{ trick.name }}({{ trick.id}})
+                                {{ trick.name }}&nbsp(n°{{ trick.id}})
                             </a>
                             <span class="float-right">
                                 {% if is_granted('ROLE_USER') %}

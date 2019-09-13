@@ -64,6 +64,7 @@ jQuery(document).ready(function() {
             });
         });
     });
+
     cp_tremble();
 
 });
@@ -91,6 +92,7 @@ function addArticleForm($collectionHolder, $newLinkLi) {
     // Display the form in the page in an li, before the "Add a tag" link li
     var $newFormLi = $('<li></li>').append(newForm);
     $newLinkLi.before($newFormLi);
+
 }
 function addTagFormDeleteLink($tagFormLi) {
     var $removeFormButton = $('<button type="button" class="action fas fa-trash-alt text-right" title="Effacer"></button>');

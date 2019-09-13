@@ -19,7 +19,7 @@
                 {% endif %}
                 <h1 class="trick-title">{{ trick.name }}</h1>
             </div>
-            <div class="row vignette">
+            <div class="row vignette hidden-small">
                 {% for picture in trick.pictures %}
                     <img class="img-thumbnail" src={{ picture.path }} alt={{ picture.name }}>
                 {% endfor %}
@@ -28,6 +28,10 @@
                     <img class="video-thumbnail" src={{ video.thumbnail }} >
                 {% endfor %}
             </div>
+            <div class="display-small">
+                <button id="display" class="action">Afficher média</button>
+            </div>
+
             <div id="Modal_img" class="modal">
                 <div class="stop-modal">
                     <img class="modal-content" id="img01">
@@ -42,11 +46,19 @@
                 </div>
             </div>
 
-            <div class="row trick-info">
+            <div class="row trick-info hidden-small">
                 <span class="badge-pill badge-primary"> Créé le : {{ trick.createdAt | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }} </span>
                 <span class="badge-pill badge-primary"> Groupe : {{ trick.category.name }}</span>
                 <span class="badge-pill badge-primary"> Modifié le : {{ trick.lastUpdate | date('d/m/y') }} à {{ trick.createdAt | date('H:i ') }} </span>
             </div>
+            <div class="row display-small">
+                <div class="badge-pill badge-primary">
+                    Créé le : {{ trick.createdAt | date('d/m/y') }}&nbsp-
+                    Groupe : {{ trick.category.name }}&nbsp-&nbsp
+                    Modifié le : {{ trick.lastUpdate | date('d/m/y') }}
+                </div>
+            </div>
+
             <div class="row trick-content">
                 <p> {{ trick.description | raw}} </p>
             </div>
@@ -72,7 +84,8 @@
                 </div>
             </div>
         {% endfor %}
-        <hr>
+        <a class="action" id="more_comment">Afficher plus</a>
+        <hr id="end_comment">
         {% if app.user %}
             {{ form_start(commentForm) }}
             {{ form_row(commentForm.description, {'attr' : {'placeholder': "Votre commentaire"}}) }}
@@ -116,6 +129,23 @@
                 console.log("close_123");
                 $(".modal").css('display','none')
             })
+            // Display pictures on mobil
+            $('#display').click(function () {
+                $('.vignette').css('display','flex');
+                $('#display').hide();
+            });
+            // More comment
+            {#$('#follow').on('click', function () {#}
+                {#click++;#}
+                {#$('more_comment').display=false;#}
+                {#return $.ajax({#}
+                    {#url: "{{ path('/trick/ajax/comment/{click}/{id}') }}"+'/'+click,#}
+                    {#method: "GET",#}
+                    {#success: function (response) {#}
+                        {#$('#end_comment').before(response);#}
+                    {#}}#}
+                {#);#}
+            {#})#}
         })
     </script>
 

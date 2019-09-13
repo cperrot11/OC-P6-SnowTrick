@@ -4,7 +4,7 @@
             <div class="card-body">
                 {% if trick.pictures|length>0 %}
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">
-                        <img src={{ trick.pictures[0].file}} alt="">
+                        <img src={{ trick.pictures[0].path}} alt="">
                     </a>
                 {% else %}
                     <img src="/images/vide.jpg">

@@ -47,4 +47,14 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllComment($trick ,$begin, $limit){
+        $query = $this->createQueryBuilder('o')
+            ->andWhere('o.trick =:val')
+            ->setParameter('val', $trick)
+            ->orderBy('o.createdAt','desc')
+            ->getQuery()
+            ->setFirstResult($begin)
+            ->setMaxResults($limit);
+        return new Paginator($query);
+    }
 }

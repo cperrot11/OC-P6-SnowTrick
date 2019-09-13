@@ -8,6 +8,7 @@ use App\Entity\Picture;
 use App\Entity\Trick;
 use App\Form\CommentType;
 use App\Form\TrickType;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use App\Services\FileUploader;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,6 +30,7 @@ class TrickController extends AbstractController
     public function index(TrickRepository $trickRepository): Response
     {
         $end = getenv('LIMIT');
+        $end_comment = getenv('LIMIT_COMMENT');
         $tricks = $trickRepository->findAllTrick(0, $end);
         $more = $end<$tricks->count();
         return $this->render('trick/index.html.twig', [
@@ -37,6 +39,19 @@ class TrickController extends AbstractController
             'more' => $more,
         ]);
     }
+    /**
+     * @Route("/ajax/comment/{click}/{id}", name="loadMoreComment", methods={"GET"})
+     */
+    public function ajaxComment(Trick $trick, Request $request, CommentRepository $repository, $click=1)
+    {
+        $begin = (($click-1)*getenv('LIMIT_COMMENT'))+1;
+        $end = getenv('LIMIT_COMMENT');
+        $comment = $repository->findAllComment($trick, $begin, $end);
+        return $this->render('trick/displayMoreComment.html.twig', [
+            'comments' => $comment,
+        ]);
+    }
+
     /**
      * @Route("/ajax/{click}", name="loadMore", methods={"GET"})
      */

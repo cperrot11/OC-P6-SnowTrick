@@ -92,7 +92,8 @@ hr{
 
 }
 .vignette {
-    display: flex;
+    display: none;
+    justify-content: left !important;
     overflow-x: scroll;
     overflow-y: hidden;
     max-height: 150px;
@@ -233,8 +234,7 @@ body{
     margin-bottom: 10px;
 }
 .trick-info{
-    justify-content: space-around;
-    margin: 10px;
+
 }
 
 .video-src {
@@ -345,11 +345,20 @@ form{
 span.form-error-message {
     font-size: 150% !important;
 }
+.display-small, .hidden-small{
+    text-align: center;
+    justify-content: space-around;
+    margin: 10px;
+}
 .form-request{margin-bottom: 41vh;}
 .form-login{margin-bottom: 36vh;}
 .form-register{margin-bottom: 19vh;}
 .form-resetting{margin-bottom: 37vh;}
 .form-error{margin-bottom: 63vh;}
+/* xs */
+@media (max-width: 574px ){
+    .hidden-small{display: none}
+}
 /* sm */
 @media (min-width: 575px) {
     .nb-fig1{display: none;}
@@ -363,6 +372,7 @@ span.form-error-message {
         height: 42vh;
     }
     form{margin: 2vh 5vh 2vh 5vh;}
+    .hidden-small{display: none}
 }
 /* md */
 @media (min-width: 768px) {
@@ -370,6 +380,8 @@ span.form-error-message {
         width: 50%;
         border-radius: 20px;
     }
+    .display-small{display: none;}
+    .hidden-small{display: flex;}
 }
 /* lg */
 @media (min-width: 992px) {
@@ -384,8 +396,10 @@ span.form-error-message {
         height: 23vh;
     }
     form{margin: 2vh 20vh 2vh 20vh;}
+    .hidden-small{display: flex;}
 }
-/* xs */
+/* xl */
 @media (min-width: 1200px) {
+
 
 }
