@@ -30,7 +30,6 @@ class TrickController extends AbstractController
     public function index(TrickRepository $trickRepository): Response
     {
         $end = getenv('LIMIT');
-        $end_comment = getenv('LIMIT_COMMENT');
         $tricks = $trickRepository->findAllTrick(0, $end);
         $more = $end<$tricks->count();
         return $this->render('trick/index.html.twig', [
@@ -73,6 +72,7 @@ class TrickController extends AbstractController
     {
         $trick = new Trick();
         $trick->setCreatedAt(new \DateTime());
+        $trick->setLastUpdate(new \DateTime());
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
